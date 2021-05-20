@@ -4,13 +4,11 @@ import {
   editVideo,
   upload,
   videoDetail,
-  videos,
 } from "../controller/videoController";
 import routes from "../routers";
 
 const videoRouter = express.Router();
 
-videoRouter.get(routes.videos, videos);
 videoRouter.get(routes.upload, upload);
 videoRouter.get(routes.videoDetail, videoDetail);
 videoRouter.get(routes.editVideo, editVideo);
