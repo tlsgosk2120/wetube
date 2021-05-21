@@ -1,7 +1,13 @@
 export const home = (req, res) =>
   res.render("home", { pageTitle: "Home", potato: 1245 });
-export const search = (req, res) =>
-  res.render("search", { pageTitle: "Search" });
+
+export const search = (req, res) => {
+  //   const searchingBy = req.query.term; 아래 쿼리와 같음
+  const {
+    query: { term: searchingBy },
+  } = req;
+  res.render("search", { pageTitle: "Search", searchingBy: searchingBy });
+};
 
 export const upload = (req, res) =>
   res.render("upload", { pageTitle: "Upload" });
