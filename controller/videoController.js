@@ -1,4 +1,8 @@
-export const home = (req, res) => res.render("home", { pageTitle: "Home" });
+import { videos } from "../db";
+
+export const home = (req, res) => {
+  res.render("home", { pageTitle: "Home", videos });
+};
 
 export const search = (req, res) => {
   //   const searchingBy = req.query.term; 아래 쿼리와 같음
