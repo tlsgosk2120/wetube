@@ -1,5 +1,4 @@
-export const home = (req, res) =>
-  res.render("home", { pageTitle: "Home", potato: 1245 });
+export const home = (req, res) => res.render("home", { pageTitle: "Home" });
 
 export const search = (req, res) => {
   //   const searchingBy = req.query.term; 아래 쿼리와 같음
