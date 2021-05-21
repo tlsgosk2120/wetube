@@ -1,8 +1,8 @@
 extends layouts/main
 
 block content
-    .from__conainer 
-        from(action="/login", method="post")
+    .from-conainer 
+        from(action=routes.login, method="post")
             input(type="email", name="email", placeholder="Email")
             input(type="password", name="password", placeholder="Password")
             input(type="submit", value="Log In")
