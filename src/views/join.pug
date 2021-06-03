@@ -1,8 +1,8 @@
-extends layouts/main
+extends base.pug
 
 block content
     .from-conainer 
-        from(action=routes.join, method="post")
+        from(action=../routes.join, method="post")
             input(type="text", name="name", placeholder="Full Name")
             input(type="email", name="email", placeholder="Email")
             input(type="password", name="password", placeholder="Password")
