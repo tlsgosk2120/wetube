@@ -1,9 +1,7 @@
 extends base.pug
 
 block content
-    //- .form-container
-    //-     form(action=`/videos${routes.editVideo}`, method="post")
-    //-         input(type="text", placeholder="Title", name="title")
-    //-         textarea(name="description", placeholder="Description")
-    //-         input(type="submit", value="Update Video")
-    //-     a.form-container__link.form-container__link--delete(href=`/videos${routes.deleteVideo}`) Delete Video
+    h4 Change Title of video
+    form(method="POST")
+        input(name="title", placeholder="Video Title", value=video.title, required)
+        input(value="Save", type="submit")

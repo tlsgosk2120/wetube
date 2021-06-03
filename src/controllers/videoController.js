@@ -16,22 +16,27 @@ export const trending = (req, res) => {
 export const watch = (req, res) => {
   const { id } = req.params;
   const video = videos[id - 1];
-  return res.render("watch", { pageTitle: `Watching ${video.title}`, video });
+  return res.render("watch", { pageTitle: `Watching : ${video.title}`, video });
 };
 
-export const edit = (req, res) =>
-  res.render("edit", { pageTitle: "Edit Video" });
-
-export const search = (req, res) => {
-  //   const searchingBy = req.query.term; 아래 쿼리와 같음
-  const {
-    query: { term: searchingBy },
-  } = req;
-  res.render("search", { pageTitle: "Search", searchingBy: searchingBy });
+export const getEdit = (req, res) => {
+  const { id } = req.params;
+  const video = videos[id - 1];
+  return res.render("edit", { pageTitle: `Editing : ${video.title}`, video });
 };
 
-export const upload = (req, res) =>
-  res.render("upload", { pageTitle: "Upload" });
+export const postEdit = (req, res) => {};
 
-export const deleteVideo = (req, res) =>
-  res.render("deleteVideo", { pageTitle: "Delete Video" });
+// export const search = (req, res) => {
+//   //   const searchingBy = req.query.term; 아래 쿼리와 같음
+//   const {
+//     query: { term: searchingBy },
+//   } = req;
+//   res.render("search", { pageTitle: "Search", searchingBy: searchingBy });
+// };
+
+// export const upload = (req, res) =>
+//   res.render("upload", { pageTitle: "Upload" });
+
+// export const deleteVideo = (req, res) =>
+//   res.render("deleteVideo", { pageTitle: "Delete Video" });
