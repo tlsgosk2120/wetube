@@ -11,8 +11,7 @@ import routes from "../routers";
 const videoRouter = express.Router();
 
 videoRouter.get(routes.watch, watch);
-videoRouter.get(routes.editVideo, getEdit);
-videoRouter.post(routes.editVideo, postEdit);
+videoRouter.route(routes.editVideo).get(getEdit).post(postEdit);
 // videoRouter.get(routes.deleteVideo, deleteVideo);
 // videoRouter.get(routes.upload, upload);
 
