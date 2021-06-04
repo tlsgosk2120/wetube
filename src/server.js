@@ -1,8 +1,7 @@
+import "./db";
 import "core-js";
 import express from "express";
 import morgan from "morgan";
-import helmet from "helmet";
-import cookieParser from "cookie-parser";
 // import bodyParser from "body-parser"; // bodyParser 모듈이 express 모듈에 내장되기 때문에 별도로 설치하지 않아도 된다
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -25,6 +24,6 @@ app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 
 const handleListening = () =>
-  console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);
+  console.log(`✅ Server listenting on http://localhost:${PORT} 🚀`);
 
 app.listen(PORT, handleListening);
