@@ -1,10 +1,6 @@
 extends base.pug
 
 block content
-    .form-container
-        form(action=`/videos${routes.upload}`, method="post")
-            label(for="file") Video File
-            input(type="file", id="file", name="file")
-            input(type="text", placeholder="Title", name="title")
-            textarea(name="description", placeholder="Description")
-            input(type="submit", value="Upload Video")
+    form(method="POST")
+        input(type="text", name="title", placeholder="Video Title", required)
+        input(value="Upload Video", type="submit")
