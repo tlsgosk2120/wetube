@@ -1,4 +1,5 @@
 import "./db";
+import Video from "./models/Video";
 import "core-js";
 import express from "express";
 import morgan from "morgan";
