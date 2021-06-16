@@ -15,9 +15,9 @@ const SEE = "/:id";
 
 // Videos
 
-const WATCH = "/:id(\\d+)";
-const EDIT_VIDEO = "/:id(\\d+)/edit";
-const DELETE_VIDEO = "/:id(\\d+)/delete";
+const WATCH = "/:id([0-9a-f]{24})";
+const EDIT_VIDEO = "/:id([0-9a-f]{24})/edit";
+const DELETE_VIDEO = "/:id([0-9a-f]{24})/delete";
 const UPLOAD = "/upload";
 
 const routes = {
