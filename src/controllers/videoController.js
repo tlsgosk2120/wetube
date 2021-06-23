@@ -67,10 +67,9 @@ export const deleteVideo = async (req, res) => {
   return res.redirect(`/`);
 };
 
-// export const search = (req, res) => {
-//   //   const searchingBy = req.query.term; 아래 쿼리와 같음
-//   const {
-//     query: { term: searchingBy },
-//   } = req;
-//   res.render("search", { pageTitle: "Search", searchingBy: searchingBy });
-// };
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  if (keyword) {
+  }
+  return res.render("search", { pageTitle: "Search" });
+};

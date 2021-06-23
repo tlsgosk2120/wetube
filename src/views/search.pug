@@ -1,5 +1,6 @@
 extends base.pug
 
 block content
-    .search__header
-        h3 Searching by #{searchingBy}
+    form(method="GET")
+        input(placeholder="Search by title", name="keyword", type="text")
+        input(type="submit", value="Search now")
