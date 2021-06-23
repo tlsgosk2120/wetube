@@ -61,6 +61,12 @@ export const postUpload = async (req, res) => {
   }
 };
 
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await Video.findByIdAndDelete(id);
+  return res.redirect(`/`);
+};
+
 // export const search = (req, res) => {
 //   //   const searchingBy = req.query.term; 아래 쿼리와 같음
 //   const {
@@ -68,6 +74,3 @@ export const postUpload = async (req, res) => {
 //   } = req;
 //   res.render("search", { pageTitle: "Search", searchingBy: searchingBy });
 // };
-
-// export const deleteVideo = (req, res) =>
-//   res.render("deleteVideo", { pageTitle: "Delete Video" });
