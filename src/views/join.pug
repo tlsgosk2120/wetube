@@ -1,11 +1,10 @@
 extends base.pug
 
 block content
-    .from-conainer 
-        from(action=../routes.join, method="post")
-            input(type="text", name="name", placeholder="Full Name")
-            input(type="email", name="email", placeholder="Email")
-            input(type="password", name="password", placeholder="Password")
-            input(type="password", name="password2", placeholder="Verify Password")
-            input(type="submit", value="Join Now")
-        include partials/socialLogin
+    form( method="POST")
+        input(name="name", type="text", required)
+        input(name="email", type="email", required)
+        input(name="username", type="text", required)
+        input(name="password", type="password", required)
+        input(name="location", type="text", required)
+        input(type="submit", value="Join")
