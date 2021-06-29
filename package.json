@@ -9,6 +9,7 @@
     "cookie-parser": "^1.4.5",
     "core-js": "^3.12.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "mongoose": "^5.12.13",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
