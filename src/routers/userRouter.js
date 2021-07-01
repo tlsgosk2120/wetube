@@ -1,12 +1,13 @@
 import express from "express";
 import {
-  // changePassword,
   getEdit,
   postEdit,
   see,
   logout,
   startGithubLogin,
   finishGithubLogin,
+  getChangePassword,
+  postChangePassword,
 } from "../controllers/userController";
 import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares";
 import routes from "../routers";
@@ -19,9 +20,13 @@ userRouter
   .all(protectorMiddleware)
   .get(getEdit)
   .post(postEdit);
+userRouter
+  .route(routes.changePassword)
+  .all(publicOnlyMiddleware)
+  .get(getChangePassword)
+  .post(postChangePassword);
+userRouter.get(routes.see, see);
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
-userRouter.get(routes.see, see);
-// userRouter.get(routes.changePassword, changePassword);
 
 export default userRouter;

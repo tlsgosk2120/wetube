@@ -10,7 +10,7 @@ const SEARCH = "/search";
 const LOGOUT = "/logout";
 const EDIT_PROFILE = "/edit";
 const SEE = "/:id";
-// const CHANGE_PASSWORD = "/change-password";
+const CHANGE_PASSWORD = "/change-password";
 
 // Videos
 
@@ -27,7 +27,7 @@ const routes = {
   search: SEARCH,
   see: SEE,
   editProfile: EDIT_PROFILE,
-  // changePassword: CHANGE_PASSWORD,
+  changePassword: CHANGE_PASSWORD,
   upload: UPLOAD,
   watch: WATCH,
   editVideo: EDIT_VIDEO,
