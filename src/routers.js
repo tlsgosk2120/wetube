@@ -9,7 +9,6 @@ const SEARCH = "/search";
 
 const LOGOUT = "/logout";
 const EDIT_PROFILE = "/edit";
-const REMOVE_PROFILE = "/remove";
 const SEE = "/:id";
 // const CHANGE_PASSWORD = "/change-password";
 
@@ -28,7 +27,6 @@ const routes = {
   search: SEARCH,
   see: SEE,
   editProfile: EDIT_PROFILE,
-  removeProfile: REMOVE_PROFILE,
   // changePassword: CHANGE_PASSWORD,
   upload: UPLOAD,
   watch: WATCH,

@@ -2,7 +2,6 @@ import express from "express";
 import {
   // changePassword,
   edit,
-  remove,
   see,
   logout,
   startGithubLogin,
@@ -14,7 +13,6 @@ const userRouter = express.Router();
 
 userRouter.get(routes.logout, logout);
 userRouter.get(routes.editProfile, edit);
-userRouter.get(routes.removeProfile, remove);
 userRouter.get("/github/start", startGithubLogin);
 userRouter.get("/github/finish", finishGithubLogin);
 userRouter.get(routes.see, see);
