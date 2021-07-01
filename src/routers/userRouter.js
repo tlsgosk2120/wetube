@@ -22,7 +22,7 @@ userRouter
   .post(postEdit);
 userRouter
   .route(routes.changePassword)
-  .all(publicOnlyMiddleware)
+  .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
 userRouter.get(routes.see, see);
