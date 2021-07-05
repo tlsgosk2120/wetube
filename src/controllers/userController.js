@@ -146,12 +146,11 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
     const {
         session: {
-            user: { _id, email: sEmail, username: sUsername },
+            user: { _id, email: sEmail, username: sUsername, avatarUrl },
         },
         body: { name, email, username, location },
         file,
     } = req;
-    console.log(file);
     if (sEmail !== email || sUsername !== username) {
         const user = await User.findOne({ $or: [{ username }, { email }] });
         if (user && user._id.toString() !== _id) {
@@ -164,6 +163,7 @@ export const postEdit = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
         _id,
         {
+            avatarUrl: file ? file.path : avatarUrl,
             name,
             email,
             username,
