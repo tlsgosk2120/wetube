@@ -18,22 +18,23 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
-  session({
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    // cookie: {
-    //   maxAge: 20000,
-    // },
-    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
-  })
+    session({
+        secret: process.env.COOKIE_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        // cookie: {
+        //   maxAge: 20000,
+        // },
+        store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
+    })
 );
 
 app.use((req, res, next) => {
-  next();
+    next();
 });
 
 app.use(localsMiddleware);
+app.use("/uploads", express.static("uploads"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
