@@ -1,4 +1,8 @@
 extends ../base
+include ../mixins/video
 
 block content
-    p User Detail
+    each potato in videos
+        +video(potato)
+    else 
+        li Sorry noting found.
