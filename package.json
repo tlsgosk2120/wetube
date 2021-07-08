@@ -16,10 +16,13 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.1",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "webpack": "^5.43.0",
+    "webpack-cli": "^4.7.2"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js --delay 2"
+    "dev": "nodemon --exec babel-node src/init.js --delay 2",
+    "assets": "webpack --config webpack.config.json"
   },
   "repository": {
     "type": "git",
