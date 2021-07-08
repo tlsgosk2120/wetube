@@ -1,6 +1,7 @@
 .env
 /uploads
-
+.DS_Store
+/assets
 
 # Logs
 logs
