@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const video = document.querySelector("video");
 const playBtn = document.getElementById("play");
 const playBtnIcon = playBtn.querySelector("i");
@@ -70,8 +72,12 @@ const handleLoadedMetadata = () => {
 const handleTimeUpdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
   timeline.value = Math.floor(video.currentTime);
-  if (Math.floor(video.currentTime) == Math.floor(video.duration))
-    playBtnIcon.classList = "fas fa-play";
+};
+
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  playBtnIcon.classList = "fas fa-play";
+  fetch(`/api/videos/${id}/view`, { method: "POST" });
 };
 
 const handleTimelineChange = (event) => {
@@ -115,9 +121,10 @@ muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadeddata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
+videoContainer.addEventListener("click", handlePlayClick);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
-videoContainer.addEventListener("click", handlePlayClick);
 document.addEventListener("keydown", handlePlayClick);
