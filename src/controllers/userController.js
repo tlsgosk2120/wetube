@@ -138,6 +138,7 @@ export const finishGithubLogin = async (req, res) => {
 
 export const logout = (req, res) => {
   req.session.destroy();
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 
@@ -156,6 +157,7 @@ export const postEdit = async (req, res) => {
   if (sEmail !== email || sUsername !== username) {
     const user = await User.findOne({ $or: [{ username }, { email }] });
     if (user && user._id.toString() !== _id) {
+      req.flash("error", "You are not the owner of the video.");
       return res.status(404).render("user/edit-profile", {
         pageTitle: "Edit Profile",
         errorMessage: "This usernam/emaile is already taken.",
@@ -179,6 +181,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly) {
+    req.flash("error", "Can't change password.");
     return res.redirect("/");
   }
   return res.render("user/change-password", { pageTitle: "Change Password" });
@@ -209,6 +212,7 @@ export const postChangePassword = async (req, res) => {
   await user.save();
   req.session.user.password = user.password;
   //send notification
+  req.flash("info", "Password updated");
   return res.redirect("/users/logout");
 };
 

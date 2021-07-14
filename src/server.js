@@ -2,6 +2,7 @@ import "core-js";
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 // import bodyParser from "body-parser"; // bodyParser 모듈이 express 모듈에 내장되기 때문에 별도로 설치하지 않아도 된다
 import userRouter from "./routers/userRouter";
@@ -30,10 +31,7 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  next();
-});
-
+app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));
