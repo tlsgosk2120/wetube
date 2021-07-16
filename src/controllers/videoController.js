@@ -15,7 +15,16 @@ export const watch = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id)
+    .populate("owner")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "owner",
+        model: "User",
+      },
+    });
+
   if (!video) {
     return res.render("video/404", { pageTitle: "Video not found." });
   }
@@ -102,7 +111,7 @@ export const deleteVideo = async (req, res) => {
   const {
     user: { _id },
   } = req.session;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("comments");
   if (!video) {
     return res.render("video/404", { pageTitle: "Video not found." });
   }
@@ -110,6 +119,14 @@ export const deleteVideo = async (req, res) => {
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndDelete(id);
+  //   if (video.comments) {
+  //     await Comment.deleteMany({ _id: { $in: video.commnets } });
+  //   }
+  const loginUser = await User.findById(_id);
+  const oldVideos = loginUser.videos;
+  let videos = oldVideos.filter((video) => String(video) !== String(id));
+  loginUser.videos = videos;
+  loginUser.save();
   return res.redirect(`/`);
 };
 
@@ -154,6 +171,12 @@ export const createComment = async (req, res) => {
     owner: user._id,
     video: id,
   });
+  video.comments.push(comment._id);
+  video.save();
+  console.log(user);
+  const loginUser = await User.findById(user._id);
+  loginUser.comments.push(comment._id);
+  loginUser.save();
 
   return res.sendStatus(201);
 };
