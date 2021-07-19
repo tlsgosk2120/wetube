@@ -36,15 +36,17 @@ block content
                 textarea(cols="30", rows="10" placeholder="Write a nice comment...")
                 button Add Comment
     div.video__comments 
-        ul 
+        ul
             each comment in video.comments.reverse()
                 li.video__comment
-                    span.comment__icon
+                    div.comment__userIcon
                         i.fas.fa-comment
-                        |  #{comment.text} 
-                    span=comment.owner.name
-                    span.comment__createdAt
-                        | #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} 
+                    div.comment__else
+                        div
+                            span=comment.owner.name
+                            span.comment__createdAt
+                                |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} 
+                        div=comment.text
 
 block scripts
     script(src="/static/js/videoPlayer.js")

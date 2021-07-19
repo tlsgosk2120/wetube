@@ -119,9 +119,15 @@ export const deleteVideo = async (req, res) => {
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndDelete(id);
-  //   if (video.comments) {
-  //     await Comment.deleteMany({ _id: { $in: video.commnets } });
-  //   }
+  const comments = video.comments;
+  if (comments) {
+    let commentIds = [];
+    comments.forEach((comment) => {
+      commentIds.push(comment._id);
+    });
+    console.log("commentIds", commentIds);
+    await Comment.deleteMany({ _id: { $in: commentIds } });
+  }
   const loginUser = await User.findById(_id);
   const oldVideos = loginUser.videos;
   let videos = oldVideos.filter((video) => String(video) !== String(id));
