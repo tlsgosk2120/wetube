@@ -38,7 +38,7 @@ block content
     div.video__comments 
         ul
             each comment in video.comments.reverse()
-                li.video__comment
+                li.video__comment(data-id=comment._id)
                     div.comment__userIcon
                         i.fas.fa-comment
                     div.comment__else
@@ -46,7 +46,15 @@ block content
                             span=comment.owner.name
                             span.comment__createdAt
                                 |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} 
-                        div=comment.text
+                        div.comment__text
+                            | #{comment.text}
+                        div.comment__icons
+                            span.far.fa-thumbs-up.likes
+                                |    #{comment.meta.likes} 
+                            span.far.fa-thumbs-down.dislikes
+                                |    #{comment.meta.dislikes}
+                            if String(comment.owner._id) === String(loggedInUser._id) 
+                                span.far.fa-trash-alt.comment__delete
 
 block scripts
     script(src="/static/js/videoPlayer.js")

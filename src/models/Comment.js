@@ -5,6 +5,10 @@ const commentSchema = new mongoose.Schema({
     owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
     video: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Video" },
     createdAt: { type: Date, required: true, default: Date.now },
+    meta: {
+        likes: { type: Number, default: 0 },
+        dislikes: { type: Number, default: 0 },
+    },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);
