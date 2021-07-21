@@ -1,73 +1,73 @@
 .video__data {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    .video__title {
-        font-size: 26px;
-        margin-bottom: 5px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  .video__title {
+    font-size: 26px;
+    margin-bottom: 5px;
+  }
+  .video__createdAt {
+    font-size: 12px;
+  }
+  .video__owner {
+    margin-bottom: 5px;
+    font-size: 14px;
+    a {
+      color: cornflowerblue;
+      text-decoration: underline;
     }
-    .video__createdAt {
-        font-size: 12px;
-    }
-    .video__owner {
-        margin-bottom: 5px;
-        font-size: 14px;
-        a {
-            color: cornflowerblue;
-            text-decoration: underline;
-        }
-    }
+  }
 }
 .video__comments {
-    display: flex;
-    flex-direction: column;
-    max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
+  .video__comment {
     width: 100%;
-    margin: 0 auto;
-    margin-top: 20px;
-    .video__comment {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        // justify-content: space-between;
-        padding: 10px;
-        border-radius: 20px;
-        background-color: white;
-        color: black;
-        margin-bottom: 10px;
-        .comment__userIcon {
-            flex: 1;
-            div,
-            i {
-                padding: 5px;
-            }
-            i {
-                font-size: 20px;
-                color: $red;
-            }
-        }
-        .comment__else {
-            flex: 9;
-            div {
-                padding: 5px;
-            }
-            .comment__text {
-                word-break: break-all;
-            }
-            .comment__createdAt {
-                text-align: right;
-                font-size: 12px;
-                color: #979797;
-            }
-            .comment__icons {
-                display: flex;
-                .likes {
-                    flex: 1;
-                }
-                .dislikes {
-                    flex: 3;
-                }
-            }
-        }
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+    .comment__userIcon {
+      flex: 1;
+      div,
+      i {
+        padding: 5px;
+      }
+      i {
+        font-size: 20px;
+        color: $red;
+      }
     }
+    .comment__else {
+      flex: 9;
+      div {
+        padding: 5px;
+      }
+      .comment__text {
+        word-break: break-all;
+      }
+      .comment__createdAt {
+        text-align: right;
+        font-size: 12px;
+        color: #979797;
+      }
+      .comment__icons {
+        display: flex;
+        .likes {
+          flex: 1;
+        }
+        .dislikes {
+          flex: 3;
+        }
+      }
+    }
+  }
 }

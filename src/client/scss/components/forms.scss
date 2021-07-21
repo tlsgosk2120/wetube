@@ -1,4 +1,5 @@
-form {
+form,
+textarea {
   max-width: 420px;
   margin: 0 auto;
   &:not(.search__form) {
@@ -7,6 +8,15 @@ form {
     border-radius: 10px;
     border: 1px solid rgba($color: #fff, $alpha: 0.1);
   }
+}
+
+textarea {
+  min-width: $width;
+  max-width: $width;
+  min-height: $height;
+  max-height: $height;
+  color: #fff;
+  font-size: 15px;
 }
 
 input:not(input[type="range"]),
@@ -25,7 +35,8 @@ input[type="submit"] {
   }
 }
 input[type="submit"],
-.social__btn {
+.social__btn,
+button {
   border-radius: 5px;
   padding: 12px 20px;
   background-color: white;
@@ -44,4 +55,12 @@ input[type="submit"],
     opacity: 0.5;
     pointer-events: none;
   }
+}
+
+button {
+  display: inline-block;
+  width: 75px;
+  height: 80px;
+  margin-left: 10px;
+  vertical-align: top;
 }
