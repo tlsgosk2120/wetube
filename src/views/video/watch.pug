@@ -49,10 +49,14 @@ block content
                         div.comment__text
                             | #{comment.text}
                         div.comment__icons
-                            span.far.fa-thumbs-up.likes
-                                |    #{comment.meta.likes} 
-                            span.far.fa-thumbs-down.dislikes
-                                |    #{comment.meta.dislikes}
+                            span.likes
+                                span.far.fa-thumbs-up
+                                    | &nbsp;
+                                span=comment.meta.likes
+                            span.dislikes
+                                span.far.fa-thumbs-down
+                                    | &nbsp;
+                                sapn=comment.meta.dislikes
                             if String(comment.owner._id) === String(loggedInUser._id) 
                                 span.far.fa-trash-alt.comment__delete
 

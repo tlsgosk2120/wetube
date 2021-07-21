@@ -14,7 +14,7 @@ header
                 li 
                     a(href="/users/logout") Log Out
                 li 
-                    a(href=`/users/${loggedInUser._id}`)(data-name=loggedInUser.name).user__name
+                    a(href=`/users/${loggedInUser._id}` data-name=loggedInUser.name).user__name
                         if !loggedInUser.avatarUrl
                             span.header__avatar 😎
                         else 
