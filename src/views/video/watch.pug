@@ -45,11 +45,24 @@ block content
                         div
                             span=comment.owner.name
                             span.comment__createdAt
-                                |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} 
-                        div.comment__text
-                            | #{comment.text}
+                                |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} &nbsp;
+                            if String(comment.owner._id) === String(loggedInUser._id) 
+                                //- span.fas.fa-pen.comment__edit
+                                span.fas.fa-ellipsis-v.comment__menu
+                        div
+                            pre.comment__text
+                                | #{`${comment.text}`}
                         div.comment__icons
                             span.likes
+                                //- if loggedInUser.likes
+                                    each like in loggedInUser.likes
+                                        if String(like) === String(comment._id)
+                                            span.fas.fa-thumbs-up
+                                                | &nbsp;
+                                        else 
+                                            span.far.fa-thumbs-up
+                                                | &nbsp;
+                                //- else 
                                 span.far.fa-thumbs-up
                                     | &nbsp;
                                 span=comment.meta.likes
@@ -57,8 +70,11 @@ block content
                                 span.far.fa-thumbs-down
                                     | &nbsp;
                                 sapn=comment.meta.dislikes
+                            if String(video.owner._id) === String(loggedInUser._id) && String(comment.owner._id) !== String(loggedInUser._id) 
+                                span.far.fa-heart.comment__heart
+                                //- span.fas.fa-heart.comment__heart
                             if String(comment.owner._id) === String(loggedInUser._id) 
-                                span.far.fa-trash-alt.comment__delete
+                                //- span.fas.fa-trash.comment__delete
 
 block scripts
     script(src="/static/js/videoPlayer.js")
