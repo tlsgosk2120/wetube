@@ -126,11 +126,11 @@ const handleSpacebarDown = (event) => {
 };
 
 const handleStopSpacebarDown = () => {
-  document.removeEventListener("keydown", handleSpacebarDown);
+  window.removeEventListener("keydown", handleSpacebarDown);
 };
 
 const handleSpacebarDownAgain = () => {
-  document.addEventListener("keydown", handleSpacebarDown);
+  window.addEventListener("keydown", handleSpacebarDown);
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -144,7 +144,7 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("click", handlePlayClick);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
-document.addEventListener("keydown", handleSpacebarDown);
+window.addEventListener("keydown", handleSpacebarDown);
 if (commentForm) {
   commentForm.addEventListener("click", handleStopSpacebarDown);
   commentForm.addEventListener("focusout", handleSpacebarDownAgain);
