@@ -6,6 +6,7 @@ const deleteBtn = document.querySelectorAll(".comment__delete");
 const videoComments = document.querySelector(".video__comments ul");
 const likesBtn = document.querySelectorAll(".fa-thumbs-up");
 const dislikesBtn = document.querySelectorAll(".fa-thumbs-down");
+const CommentMenuBtn = document.querySelectorAll(".comment__menu");
 
 const addComment = (text, id) => {
   const newComment = document.createElement("li");
@@ -110,6 +111,19 @@ const handleDeleteComment = async (event) => {
   }
 };
 
+const handleCommentMenuBtn = (event) => {
+  const { target } = event;
+  console.log(target);
+  const menu = target.parentNode.nextSibling;
+  console.log(menu);
+  menu.style.display = "inline-block";
+  menu.style.position = "absolute";
+  menu.style.top = target.pageY + "px";
+  menu.style.left = target.pageX + "px";
+  console.log(event.pageY);
+  console.log(event.pageX);
+};
+
 if (form) {
   form.addEventListener("submit", handleSubmit);
 }
@@ -120,7 +134,13 @@ if (deleteBtn) {
   );
 }
 
-likesBtn.forEach((btn) => btn.addEventListener("click", handleLikeComment));
-dislikesBtn.forEach((btn) =>
-  btn.addEventListener("click", handleDislikeComment)
-);
+// likesBtn.forEach((btn) => btn.addEventListener("click", handleLikeComment));
+// dislikesBtn.forEach((btn) =>
+//   btn.addEventListener("click", handleDislikeComment)
+// );
+
+if (CommentMenuBtn) {
+  CommentMenuBtn.forEach((btn) =>
+    btn.addEventListener("click", handleCommentMenuBtn)
+  );
+}

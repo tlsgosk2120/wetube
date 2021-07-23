@@ -47,8 +47,17 @@ block content
                             span.comment__createdAt
                                 |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} &nbsp;
                             if String(comment.owner._id) === String(loggedInUser._id) 
-                                //- span.fas.fa-pen.comment__edit
                                 span.fas.fa-ellipsis-v.comment__menu
+                        
+                        if String(comment.owner._id) === String(loggedInUser._id) 
+                            div.commnet__menu_box
+                                ul 
+                                    li 
+                                        span.fas.fa-pen.comment__edit
+                                        span.comment__btn_text 수정
+                                    li
+                                        span.fas.fa-trash.comment__delete
+                                        span.comment__btn_text 삭제
                         div
                             pre.comment__text
                                 | #{`${comment.text}`}
@@ -73,8 +82,6 @@ block content
                             if String(video.owner._id) === String(loggedInUser._id) && String(comment.owner._id) !== String(loggedInUser._id) 
                                 span.far.fa-heart.comment__heart
                                 //- span.fas.fa-heart.comment__heart
-                            if String(comment.owner._id) === String(loggedInUser._id) 
-                                //- span.fas.fa-trash.comment__delete
 
 block scripts
     script(src="/static/js/videoPlayer.js")

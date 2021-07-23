@@ -67,6 +67,28 @@
         .comment__heart {
           margin-right: 15px;
         }
+        .fa-thumbs-up:hover,
+        .fa-thumbs-down:hover,
+        .comment__heart:hover {
+          color: #606060;
+        }
+      }
+      .commnet__menu_box {
+        display: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: 1px solid $grey;
+        background-color: white;
+        li {
+          margin: 5px;
+        }
+        span {
+          margin: 5px;
+        }
+        .comment__btn_text {
+          color: #606060;
+          font-size: 13px;
+        }
       }
       .comment__delete {
         font-size: 15px;
