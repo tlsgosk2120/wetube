@@ -49,13 +49,13 @@ block content
                             if String(comment.owner._id) === String(loggedInUser._id) 
                                 span.fas.fa-ellipsis-v.comment__menu
                         if String(comment.owner._id) === String(loggedInUser._id) 
-                            div.commnet__menu_box
+                            div.comment__menu_box
                                 ul 
-                                    li 
-                                        span.fas.fa-pen.comment__edit
+                                    li.comment_edit
+                                        span.fas.fa-pen.comment__edit_btn
                                         span.comment__btn_text 수정
-                                    li
-                                        span.fas.fa-trash.comment__delete
+                                    li.comment__delete
+                                        span.fas.fa-trash.comment__delete_btn
                                         span.comment__btn_text 삭제
                         div
                             pre.comment__text
