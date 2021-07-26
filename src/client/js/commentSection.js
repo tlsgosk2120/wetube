@@ -1,5 +1,3 @@
-import { async } from "regenerator-runtime";
-
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 const deleteBtn = document.querySelectorAll(".comment__delete");
@@ -113,15 +111,28 @@ const handleDeleteComment = async (event) => {
 
 const handleCommentMenuBtn = (event) => {
   const { target } = event;
-  console.log(target);
   const menu = target.parentNode.nextSibling;
-  console.log(menu);
   menu.style.display = "inline-block";
   menu.style.position = "absolute";
-  menu.style.top = target.pageY + "px";
-  menu.style.left = target.pageX + "px";
-  console.log(event.pageY);
-  console.log(event.pageX);
+  menu.style.top =
+    target.getBoundingClientRect().y +
+    target.getBoundingClientRect().height +
+    pageYOffset +
+    "px";
+  menu.style.left = target.getBoundingClientRect().x + "px";
+  console.log(target.getBoundingClientRect());
+  console.log(target.getBoundingClientRect().y);
+  console.log(target.getBoundingClientRect().x);
+  console.log(pageYOffset);
+};
+
+const handleClickIcon = (event) => {
+  const { target } = event;
+  target.classList.add("click-after");
+  target.style.color = "cornflowerblue";
+  setTimeout(() => {
+    target.classList.remove("click-after");
+  }, 300);
 };
 
 if (form) {
@@ -144,3 +155,13 @@ if (CommentMenuBtn) {
     btn.addEventListener("click", handleCommentMenuBtn)
   );
 }
+
+document
+  .querySelectorAll(".comment__icons .fa-thumbs-up")
+  .forEach((btn) => btn.addEventListener("click", handleClickIcon));
+document
+  .querySelectorAll(".comment__icons .fa-thumbs-down")
+  .forEach((btn) => btn.addEventListener("click", handleClickIcon));
+document
+  .querySelectorAll(".comment__menu")
+  .forEach((btn) => btn.addEventListener("click", handleClickIcon));
