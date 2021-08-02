@@ -145,7 +145,7 @@ const handleRemoveCommentMenu = () => {
     }
 };
 
-const handleClickIcon = (event) => {
+const clickIcon = (event) => {
     const { target } = event;
     const COMMENT_MENU = "comment__menu";
     target.classList.add("click-after");
@@ -170,6 +170,18 @@ const handleClickIcon = (event) => {
     }, 300);
 };
 
+const handleDislikes = (event) => {
+    clickIcon(event);
+};
+
+const handleLikes = (event) => {
+    clickIcon(event);
+};
+
+const handleLoves = (event) => {
+    clickIcon(event);
+};
+
 if (form) {
     form.addEventListener("submit", handleSubmit);
 }
@@ -178,16 +190,11 @@ if (deleteBtns) {
     deleteBtns.forEach((btn) => btn.addEventListener("click", handleDeleteComment));
 }
 
-// likesBtns.forEach((btn) => btn.addEventListener("click", handleLikeComment));
-// dislikesBtns.forEach((btn) =>
-//   btn.addEventListener("click", handleDislikeComment)
-// );
-
 if (commentMenuBtns) {
     commentMenuBtns.forEach((btn) => btn.addEventListener("click", handleCommentMenuBtn));
 }
 
-likesBtns.forEach((btn) => btn.addEventListener("click", handleClickIcon));
-dislikesBtns.forEach((btn) => btn.addEventListener("click", handleClickIcon));
-lovesBtns.forEach((btn) => btn.addEventListener("click", handleClickIcon));
-commentMenuBtns.forEach((btn) => btn.addEventListener("click", handleClickIcon));
+likesBtns.forEach((btn) => btn.addEventListener("click", handleLikes));
+dislikesBtns.forEach((btn) => btn.addEventListener("click", handleDislikes));
+lovesBtns.forEach((btn) => btn.addEventListener("click", handleLoves));
+commentMenuBtns.forEach((btn) => btn.addEventListener("click", clickIcon));
