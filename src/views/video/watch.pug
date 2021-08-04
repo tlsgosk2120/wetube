@@ -73,10 +73,7 @@ block content
                                 //- else 
                                 span.far.fa-thumbs-up
                                 span=comment.meta.likes
-                            span.dislikes
-                                span.far.fa-thumbs-down
-                                sapn=comment.meta.dislikes
-                            if String(video.owner._id) === String(loggedInUser._id) && String(comment.owner._id) !== String(loggedInUser._id) 
+                            if String(video.owner._id) === String(loggedInUser._id)
                                 span.far.fa-heart.comment__heart
                                 //- span.fas.fa-heart.comment__heart
 

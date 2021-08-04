@@ -169,6 +169,17 @@ export const registerView = async (req, res) => {
   return res.sendStatus(200);
 };
 
+// export const registerLikes = async (req, res) => {
+//   const { id } = req.params;
+//   const video = await Video.findById(id);
+//   if (!video) {
+//     return res.sendStatus(404);
+//   }
+//   video.meta.views += 1;
+//   await video.save();
+//   return res.sendStatus(200);
+// };
+
 export const createComment = async (req, res) => {
   const {
     params: { id },
@@ -226,13 +237,26 @@ export const deleteComment = async (req, res) => {
   return res.sendStatus(201);
 };
 
-export const registerLikes = async (req, res) => {
-  const { id } = req.params;
-  const video = await Video.findById(id);
-  if (!video) {
-    return res.sendStatus(404);
+export const countLike = async (req, res) => {
+  const {
+    params: { id },
+    session: { user },
+  } = req;
+  const comment = await Comment.findById(id);
+  const loginUser = await User.findById(user._id);
+  if (loginUser.commentLikes.includes(id)) {
+    let newCommentLikes = loginUser.commentLikes.filter(
+      (like) => String(like) !== String(id)
+    );
+    loginUser.commentLikes = newCommentLikes;
+    loginUser.save();
+    comment.meta.likes -= 1;
+    comment.save();
+    return res.sendStatus(201);
   }
-  video.meta.views += 1;
-  await video.save();
-  return res.sendStatus(200);
+  loginUser.commentLikes.push(id);
+  loginUser.save();
+  comment.meta.likes += 1;
+  comment.save();
+  return res.sendStatus(201);
 };
