@@ -22,6 +22,11 @@ block content
 
     div.video__data
         p.video__title=video.title
+        span.likes
+            span.far.fa-star 
+            span=video.meta.likes
+        small
+            | #{video.meta.views} view
         small.video__owner Uploaded by 
             a(href=`/users/${video.owner._id}`)=video.owner.name 
         small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
