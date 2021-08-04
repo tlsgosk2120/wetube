@@ -2,7 +2,7 @@ const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 const deleteBtns = document.querySelectorAll(".comment__delete");
 const videoComments = document.querySelector(".video__comments ul");
-const likesBtns = document.querySelectorAll(".fa-thumbs-up");
+const likesBtns = document.querySelectorAll(".fa-star");
 const commentMenuBtns = document.querySelectorAll(".comment__menu");
 const lovesBtns = document.querySelectorAll(".comment__heart");
 
@@ -54,7 +54,7 @@ const addComment = (text, id) => {
   textBox.className = "comment__text";
   commentIcons.className = "comment__icons";
   likes.className = "likes";
-  likesIcon.className = "far fa-thumbs-up";
+  likesIcon.className = "far fa-star";
   loveIcon.className = "far fa-heart comment__heart";
   textBox.innerText = `${text}`;
   nameSpan.innerText = `${name}`;
@@ -150,15 +150,17 @@ const handleDeleteComment = async (event) => {
 
 const clickIcon = (target) => {
   console.log(target);
-  if (target.classList.contains("fa-thumbs-up")) {
+  if (target.classList.contains("fa-star")) {
     if (
       target.style.color == "" ||
       target.style.color === "rgb(144, 144, 144)"
     ) {
-      target.style.color = "cornflowerblue";
+      target.style.color = "#fce100";
+      target.className = "fas fa-star";
       target.nextSibling.innerText = Number(target.nextSibling.innerText) + 1;
     } else {
       target.style.color = "#909090";
+      target.className = "far fa-star";
       target.nextSibling.innerText = Number(target.nextSibling.innerText) - 1;
     }
   }
