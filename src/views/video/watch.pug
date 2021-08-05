@@ -23,7 +23,10 @@ block content
     div.video__data
         p.video__title=video.title
         span.likes
-            span.far.fa-star 
+            - if (loggedInUser.videoLikes.includes(video._id.toString())) 
+                span.fas.fa-star.star
+            - else 
+                span.far.fa-star
             span=video.meta.likes
         small
             | #{video.meta.views} view
@@ -67,18 +70,14 @@ block content
                                 | #{`${comment.text}`}
                         div.comment__icons
                             span.likes
-                                //- if loggedInUser.likes
-                                    each like in loggedInUser.likes
-                                        if String(like) === String(comment._id)
-                                            span.fas.fa-thumbs-up
-                                                | &nbsp;
-                                        else 
-                                            span.far.fa-thumbs-up
-                                                | &nbsp;
-                                //- else 
-                                span.far.fa-star
+                                - if (loggedInUser.commentLikes.includes(comment._id.toString())) 
+                                    span.fas.fa-star.star(data-star=1)
+                                - else 
+                                    span.far.fa-star(data-star=0)
                                 span=comment.meta.likes
-                            if String(video.owner._id) === String(loggedInUser._id)
+                            if comment.meta.heart
+                                span.far.fa-heart.comment__heart.heart
+                            else if String(video.owner._id) === String(loggedInUser._id)
                                 span.far.fa-heart.comment__heart
                                 //- span.fas.fa-heart.comment__heart
 

@@ -24,6 +24,7 @@ export const watch = async (req, res) => {
         model: "User",
       },
     });
+  console.log(res.locals.loggedInUser.commentLikes);
 
   if (!video) {
     return res.render("video/404", { pageTitle: "Video not found." });
@@ -227,7 +228,12 @@ export const deleteComment = async (req, res) => {
     (comment) => String(comment) !== String(id)
   );
   loginUser.comments = newUserCommnets;
+  let newUserCommnetLikes = loginUser.commentLikes.filter(
+    (likes) => String(likes) !== String(id)
+  );
+  loginUser.commentLikes = newUserCommnetLikes;
   loginUser.save();
+  req.session.user = loginUser;
   const video = await Video.findById(comment.video);
   let newVideoCommnets = video.comments.filter(
     (comment) => String(comment) !== String(id)
@@ -252,11 +258,13 @@ export const countLike = async (req, res) => {
     loginUser.save();
     comment.meta.likes -= 1;
     comment.save();
+    req.session.user = loginUser;
     return res.sendStatus(201);
   }
   loginUser.commentLikes.push(id);
   loginUser.save();
   comment.meta.likes += 1;
   comment.save();
+  req.session.user = loginUser;
   return res.sendStatus(201);
 };

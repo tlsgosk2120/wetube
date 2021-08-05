@@ -152,9 +152,10 @@ const clickIcon = (target) => {
   console.log(target);
   if (target.classList.contains("fa-star")) {
     if (
-      target.style.color == "" ||
-      target.style.color === "rgb(144, 144, 144)"
+      target.style.color === "rgb(144, 144, 144)" ||
+      (target.style.color == "" && target.dataset.star == 0)
     ) {
+      console.log(target.style.color);
       target.style.color = "#fce100";
       target.className = "fas fa-star";
       target.nextSibling.innerText = Number(target.nextSibling.innerText) + 1;
@@ -176,6 +177,7 @@ const clickIcon = (target) => {
       target.style.color = "#909090";
     }
   }
+  target.classList.add("click-after");
   setTimeout(() => {
     target.classList.remove("click-after");
   }, 300);

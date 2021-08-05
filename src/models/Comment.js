@@ -7,6 +7,7 @@ const commentSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true, default: Date.now },
   meta: {
     likes: { type: Number, default: 0 },
+    heart: { type: Boolean, default: false },
   },
 });
 
