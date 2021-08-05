@@ -4,6 +4,7 @@ import bcryptjs from "bcryptjs";
 
 export const getJoin = (req, res) =>
   res.render("user/join", { pageTitle: "Join" });
+
 export const postJoin = async (req, res) => {
   console.log(req.body);
   const { name, username, email, password, password2, location } = req.body;
@@ -18,7 +19,7 @@ export const postJoin = async (req, res) => {
   if (exists) {
     return res.status(404).render("user/join", {
       pageTitle,
-      errorMessage: "This usernam/emaile is already taken.",
+      errorMessage: "This usernam/email is already taken.",
     });
   }
   try {
@@ -40,6 +41,7 @@ export const postJoin = async (req, res) => {
 export const getLogin = (req, res) => {
   return res.render("user/login", { pageTitle: "Login" });
 };
+
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
