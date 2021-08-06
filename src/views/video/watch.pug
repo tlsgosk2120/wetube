@@ -23,7 +23,7 @@ block content
     div.video__data
         p.video__title=video.title
         span.likes
-            - if (loggedInUser.videoLikes.includes(video._id.toString())) 
+            - if (loggedIn && loggedInUser.videoLikes.includes(video._id.toString())) 
                 span.fas.fa-star.star
             - else 
                 span.far.fa-star
@@ -70,7 +70,7 @@ block content
                                 | #{`${comment.text}`}
                         div.comment__icons
                             span.likes
-                                - if (loggedInUser.commentLikes.includes(comment._id.toString())) 
+                                - if (loggedIn && loggedInUser.commentLikes.includes(comment._id.toString())) 
                                     span.fas.fa-star.star(data-star=1)
                                 - else 
                                     span.far.fa-star(data-star=0)
@@ -83,5 +83,4 @@ block content
 
 block scripts
     script(src="/static/js/videoPlayer.js")
-    if loggedIn
-        script(src="/static/js/commentSection.js")
+    script(src="/static/js/commentSection.js")

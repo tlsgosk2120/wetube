@@ -5,6 +5,7 @@ const videoComments = document.querySelector(".video__comments ul");
 const likesBtns = document.querySelectorAll(".fa-star");
 const commentMenuBtns = document.querySelectorAll(".comment__menu");
 const lovesBtns = document.querySelectorAll(".comment__heart");
+const userName = document.querySelector(".user__name");
 
 const DELETE_BOX = "comment__delete";
 let lastMeneBtn;
@@ -34,7 +35,7 @@ const addComment = (text, id) => {
   const likesCount = document.createElement("span");
   const loveIcon = document.createElement("span");
 
-  const { name } = document.querySelector(".user__name").dataset;
+  const { name } = userName.dataset;
   const videoOwner = document.querySelector(".video__owner a");
 
   newComment.dataset.id = id;
@@ -148,8 +149,7 @@ const handleDeleteComment = async (event) => {
   }
 };
 
-const clickIcon = (target) => {
-  console.log(target);
+const changeIconColor = (target) => {
   if (target.classList.contains("fa-star")) {
     if (
       target.style.color === "rgb(144, 144, 144)" ||
@@ -177,19 +177,29 @@ const clickIcon = (target) => {
       target.style.color = "#909090";
     }
   }
+};
+
+const clickIcon = (target) => {
   target.classList.add("click-after");
   setTimeout(() => {
     target.classList.remove("click-after");
-  }, 300);
+    if (!userName) {
+      alert("Login First!");
+    }
+  }, 100);
 };
 
 const countLike = async (target) => {
-  let commentId = target.parentNode.parentNode.parentNode.parentNode.dataset.id;
-  const response = await fetch(`/api/commnets/${commentId}/like`, {
-    method: "PUT",
-  });
-  if (response.status === 201) {
-    clickIcon(target);
+  clickIcon(target);
+  if (userName) {
+    let commentId =
+      target.parentNode.parentNode.parentNode.parentNode.dataset.id;
+    const response = await fetch(`/api/commnets/${commentId}/like`, {
+      method: "PUT",
+    });
+    if (response.status === 201) {
+      changeIconColor(target);
+    }
   }
 };
 
