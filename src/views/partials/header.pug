@@ -16,7 +16,7 @@ header
                 li 
                     a(href=`/users/${loggedInUser._id}` data-name=loggedInUser.name).user__name
                         if !loggedInUser.avatarUrl
-                            span.header__avatar 😎
+                            span.fas.fa-user-circle.header__avatar
                         else 
                             img.header__avatar(src="/" + loggedInUser.avatarUrl)
             else

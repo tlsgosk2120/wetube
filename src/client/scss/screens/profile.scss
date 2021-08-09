@@ -12,9 +12,11 @@
     font-size: 18px;
   }
   .avatar {
+    display: inline-block;
     width: 150px;
     height: 150px;
     border-radius: 50%;
     font-size: 110px;
+    text-align: center;
   }
 }

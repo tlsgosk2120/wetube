@@ -13,7 +13,9 @@ let lastMeneBtn;
 const addComment = (text, id) => {
   const newComment = document.createElement("li");
   const userIcon = document.createElement("div");
-  const icon = document.createElement("i");
+  const a = document.createElement("a");
+  const icon = document.createElement("span");
+  const img = document.createElement("img");
   const commentElse = document.createElement("div");
   const elseDiv = document.createElement("div");
   const nameSpan = document.createElement("span");
@@ -37,11 +39,13 @@ const addComment = (text, id) => {
 
   const { name } = userName.dataset;
   const videoOwner = document.querySelector(".video__owner a");
+  const userAvatar = document.querySelector(".header__avatar");
 
   newComment.dataset.id = id;
   newComment.className = "video__comment";
   userIcon.className = "comment__userIcon";
-  icon.className = "fas fa-comment";
+  icon.className = "fas fa-user-circle comment_avatar";
+  img.className = "comment_avatar";
   commentElse.className = "comment__else";
   createdAtSpan.className = "comment__createdAt";
   commentMenuIcon.className = "fas fa-ellipsis-v comment__menu";
@@ -90,7 +94,13 @@ const addComment = (text, id) => {
   commentElse.appendChild(commentMenuBox);
   commentElse.appendChild(comment);
   commentElse.appendChild(commentIcons);
-  userIcon.appendChild(icon);
+  userIcon.appendChild(a);
+  if (userAvatar.classList.contains("fas")) {
+    a.appendChild(icon);
+  } else {
+    img.src = userAvatar.src;
+    a.appendChild(img);
+  }
   newComment.appendChild(userIcon);
   newComment.appendChild(commentElse);
   videoComments.prepend(newComment);
@@ -186,11 +196,10 @@ const clickIcon = (target) => {
     if (!userName) {
       alert("Login First!");
     }
-  }, 100);
+  }, 300);
 };
 
 const countLike = async (target) => {
-  clickIcon(target);
   if (userName) {
     let commentId =
       target.parentNode.parentNode.parentNode.parentNode.dataset.id;
@@ -199,7 +208,19 @@ const countLike = async (target) => {
     });
     if (response.status === 201) {
       changeIconColor(target);
+      clickIcon(target);
     }
+  }
+};
+
+const clickHeart = async (target) => {
+  clickIcon(target);
+  let commentId = target.parentNode.parentNode.parentNode.parentNode.dataset.id;
+  const response = await fetch(`/api/commnets/${commentId}/heart`, {
+    method: "PUT",
+  });
+  if (response.status === 201) {
+    changeIconColor(target);
   }
 };
 
@@ -235,7 +256,7 @@ const handleLikes = (event) => {
 
 const handleLoves = (event) => {
   const { target } = event;
-  clickIcon(target);
+  clickHeart(target);
 };
 
 const handleCommentMenus = (event) => {
@@ -243,7 +264,7 @@ const handleCommentMenus = (event) => {
   target.classList.add("click-after");
   setTimeout(() => {
     target.classList.remove("click-after");
-  }, 300);
+  }, 500);
   handleCommentMenuBtn(event);
 };
 

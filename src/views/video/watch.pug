@@ -22,17 +22,30 @@ block content
 
     div.video__data
         p.video__title=video.title
-        span.likes
-            - if (loggedIn && loggedInUser.videoLikes.includes(video._id.toString())) 
-                span.fas.fa-star.star
-            - else 
-                span.far.fa-star
-            span=video.meta.likes
-        small
-            | #{video.meta.views} view
-        small.video__owner Uploaded by 
-            a(href=`/users/${video.owner._id}`)=video.owner.name 
-        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        span.video_meta
+            span.far.fa-eye
+                |  #{video.meta.views} view
+            span.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+            span.likes
+                - if (loggedIn && loggedInUser.videoLikes.includes(video._id.toString())) 
+                    span.fas.fa-star.star &nbsp;
+                - else 
+                    span.far.fa-star &nbsp;
+                span=video.meta.likes
+            if String(video.owner._id) === String(loggedInUser._id) 
+                span.fas.fa-ellipsis-v.video__menu
+        sapn.video_info
+            span.video__owner_avatar
+                a(href=`/users/${video.owner._id}`)
+                    if !video.owner.avatarUrl
+                        span.fas.fa-user-circle.owner_avatar
+                    else
+                        img.owner_avatar(src="/" + video.owner.avatarUrl)
+            span.video__owner
+                span.owner_name
+                    a(href=`/users/${video.owner._id}`)=video.owner.name
+                    span 구독자 1명
+                span=video.description
         br
         if String(video.owner._id) === String(loggedInUser._id) 
             a(href=`${video.id}/edit`) Edit Video &rarr;
@@ -48,7 +61,11 @@ block content
             each comment in video.comments.reverse()
                 li.video__comment(data-id=comment._id)
                     div.comment__userIcon
-                        i.fas.fa-comment
+                        a(href=`/users/${comment.owner._id}`)
+                            if !comment.owner.avatarUrl
+                                span.fas.fa-user-circle.comment_avatar
+                            else
+                                img.comment_avatar(src="/" + comment.owner.avatarUrl)
                     div.comment__else
                         div
                             span=comment.owner.name

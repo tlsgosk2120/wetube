@@ -268,3 +268,35 @@ export const countLike = async (req, res) => {
   req.session.user = loginUser;
   return res.sendStatus(201);
 };
+
+export const pushHeart = async (req, res) => {
+  const {
+    params: { id },
+    session: { user },
+  } = req;
+  const comment = await Comment.findById(id);
+  const loginUser = await User.findById(user._id);
+  if (user._id !== comment.owner._id) {
+    req.flash("error", "Not authorized.");
+    return res.redirect("/");
+  }
+  if (comment.heart) {
+  }
+  if (loginUser.commentLikes.includes(id)) {
+    let newCommentLikes = loginUser.commentLikes.filter(
+      (like) => String(like) !== String(id)
+    );
+    loginUser.commentLikes = newCommentLikes;
+    loginUser.save();
+    comment.meta.likes -= 1;
+    comment.save();
+    req.session.user = loginUser;
+    return res.sendStatus(201);
+  }
+  loginUser.commentLikes.push(id);
+  loginUser.save();
+  comment.meta.likes += 1;
+  comment.save();
+  req.session.user = loginUser;
+  return res.sendStatus(201);
+};
