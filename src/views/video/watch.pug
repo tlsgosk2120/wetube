@@ -88,13 +88,13 @@ block content
                         div.comment__icons
                             span.likes
                                 - if (loggedIn && loggedInUser.commentLikes.includes(comment._id.toString())) 
-                                    span.fas.fa-star.star(data-star=1)
+                                    span.fas.fa-star.star
                                 - else 
-                                    span.far.fa-star(data-star=0)
+                                    span.far.fa-star
                                 span=comment.meta.likes
-                            if comment.meta.heart
-                                span.far.fa-heart.comment__heart.heart
-                            else if String(video.owner._id) === String(loggedInUser._id)
+                            - if (comment.meta.heart)
+                                span.fas.fa-heart.comment__heart.heart
+                            - else if (String(video.owner._id) === String(loggedInUser._id))
                                 span.far.fa-heart.comment__heart
                                 //- span.fas.fa-heart.comment__heart
 
