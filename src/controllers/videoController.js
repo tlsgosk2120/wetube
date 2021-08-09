@@ -216,7 +216,7 @@ export const deleteComment = async (req, res) => {
         req.flash("error", "Comment is not exist.");
         return res.redirect("/");
     }
-    if (String(comment.owner) !== String(user._id)) {
+    if (String(comment.owner._id) !== String(user._id)) {
         return res.status(403).redirect("/");
     }
     await Comment.findByIdAndDelete(id);
