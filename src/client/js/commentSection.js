@@ -163,11 +163,7 @@ const handleDeleteComment = async (event) => {
 
 const changeIconColor = (target) => {
   if (target.classList.contains("fa-star")) {
-    if (
-      target.style.color === "rgb(144, 144, 144)" ||
-      (target.style.color == "" && target.dataset.star == 0)
-    ) {
-      console.log(target.style.color);
+    if (target.classList.contains("far")) {
       target.style.color = "#fce100";
       target.className = "fas fa-star";
       target.nextSibling.innerText = Number(target.nextSibling.innerText) + 1;
@@ -178,10 +174,7 @@ const changeIconColor = (target) => {
     }
   }
   if (target.classList.contains("comment__heart")) {
-    if (
-      target.style.color == "" ||
-      target.style.color === "rgb(144, 144, 144)"
-    ) {
+    if (target.classList.contains("far")) {
       target.className = "fas fa-heart comment__heart";
       target.style.color = "#cc4646";
     } else {
@@ -216,13 +209,13 @@ const countLike = async (target) => {
 };
 
 const clickHeart = async (target) => {
-  clickIcon(target);
-  let commentId = target.parentNode.parentNode.parentNode.parentNode.dataset.id;
+  let commentId = target.parentNode.parentNode.parentNode.dataset.id;
   const response = await fetch(`/api/commnets/${commentId}/heart`, {
     method: "PUT",
   });
   if (response.status === 201) {
     changeIconColor(target);
+    clickIcon(target);
   }
 };
 
