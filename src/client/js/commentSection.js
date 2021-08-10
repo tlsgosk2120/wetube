@@ -6,6 +6,8 @@ const likesBtns = document.querySelectorAll(".fa-star");
 const commentMenuBtns = document.querySelectorAll(".comment__menu");
 const lovesBtns = document.querySelectorAll(".comment__heart");
 const userName = document.querySelector(".user__name");
+const calcelBtn = document.querySelector(".comment_calcel");
+const saveBtn = document.querySelector(".comment_save");
 
 const DELETE_BOX = "comment__delete";
 let lastMeneBtn;
@@ -268,8 +270,15 @@ const handleCommentMenus = (event) => {
   handleCommentMenuBtn(event);
 };
 
+const handleCancelBtn = (event) => {
+  const { target } = event;
+  event.preventDefault();
+  const comment = target.previousSibling.previousSibling;
+  comment.value = "";
+};
+
 if (form) {
-  form.addEventListener("submit", handleSubmit);
+  saveBtn.addEventListener("click", handleSubmit);
 }
 
 if (deleteBtns) {
@@ -283,3 +292,4 @@ lovesBtns.forEach((btn) => btn.addEventListener("click", handleLoves));
 commentMenuBtns.forEach((btn) =>
   btn.addEventListener("click", handleCommentMenus)
 );
+calcelBtn.addEventListener("click", handleCancelBtn);

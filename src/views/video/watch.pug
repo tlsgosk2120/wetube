@@ -34,29 +34,38 @@ block content
                 span=video.meta.likes
             if String(video.owner._id) === String(loggedInUser._id) 
                 span.fas.fa-ellipsis-v.video__menu
-        sapn.video_info
-            span.video__owner_avatar
-                a(href=`/users/${video.owner._id}`)
-                    if !video.owner.avatarUrl
-                        span.fas.fa-user-circle.owner_avatar
-                    else
-                        img.owner_avatar(src="/" + video.owner.avatarUrl)
-            span.video__owner
-                span.owner_name
-                    a(href=`/users/${video.owner._id}`)=video.owner.name
-                    span 구독자 1명
-                span=video.description
+        span.video_info
+            sapn.video_owner_info
+                span.video__owner_avatar
+                    a(href=`/users/${video.owner._id}`)
+                        if !video.owner.avatarUrl
+                            span.fas.fa-user-circle.owner_avatar
+                        else
+                            img.owner_avatar(src="/" + video.owner.avatarUrl)
+                span.video__owner
+                    span.owner_name
+                        a(href=`/users/${video.owner._id}`)=video.owner.name
+                        span.owner_sub 구독자 1명
+            span=video.description
         br
         if String(video.owner._id) === String(loggedInUser._id) 
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
-    if loggedIn
-        div.video__add-comments
-            form.video__comment-form#commentForm
-                textarea(cols="30", rows="10" placeholder="Write a nice comment...")
-                button Send
     div.video__comments 
+        if loggedIn
+            div.video__add-comments
+                form.video__comment-form#commentForm
+                    div.comment__userIcon
+                        a(href=`/users/${loggedInUser._id}`)
+                            if !loggedInUser.avatarUrl
+                                span.fas.fa-user-circle.comment_avatar
+                            else
+                                img.comment_avatar(src="/" + loggedInUser.avatarUrl)
+                    div.comment_write
+                        textarea(cols="30", rows="10" placeholder="Write a nice comment...")
+                        button.comment_save 전송
+                        button.comment_calcel 취소
         ul
             each comment in video.comments.reverse()
                 li.video__comment(data-id=comment._id)
