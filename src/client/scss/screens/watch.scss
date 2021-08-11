@@ -17,6 +17,7 @@ body {
   .video__createdAt {
   }
   .video_info {
+    width: 100%;
     padding: 20px 0;
     border-top: 1px solid #303030;
     border-bottom: 1px solid #303030;
@@ -39,17 +40,17 @@ body {
       }
       .video__owner {
         height: 100%;
-        width: 94%;
+        width: 95%;
         margin-bottom: 5px;
         padding: 5px 0;
         .owner_name {
           display: inline-block;
           height: 50px;
           line-height: normal;
-          a {
-            color: cornflowerblue;
-            text-decoration: underline;
-          }
+          // a {
+          //   color: cornflowerblue;
+          //   text-decoration: underline;
+          // }
           .owner_sub {
             color: $grey;
             font-size: 12px;
@@ -63,57 +64,62 @@ body {
       padding-top: 15px;
     }
   }
+  .comment_count {
+    padding: 25px 0;
+    font-size: 16px;
+    .comment_sort {
+      margin-left: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      vertical-align: top;
+    }
+  }
   a {
     width: fit-content;
   }
 }
-.video__add-comments {
-  margin-bottom: 20px;
-  .video__comment-form {
-    textarea {
-      display: inline-block;
-      width: 100%;
-      height: $height;
-      resize: none;
-      color: #fff;
-      margin: 0 auto;
-      background-color: rgba($color: $bg, $alpha: 0.7);
-      border: none;
-      // border-radius: 10px;
-      border-bottom: 1px solid rgba($color: #fff, $alpha: 0.1);
-    }
-    textarea:focus {
-      outline: none;
-    }
-    // textarea:focus button.comment_save {
-    //   display: block !important;
-    // }
 
-    button {
-      // display: none;
-      float: right;
-      background-color: $bg !important;
-      border: solid 1px #3b3b3b !important;
-      color: #fff !important;
-      box-shadow: 1px 1px 5px black;
-      // border-radius: 5px !important;
-      margin-left: 5px;
-      margin-top: 5px;
-    }
-    .comment_save {
-      background-color: #3b3b3b !important;
-      color: #fff !important;
-    }
+// 댓글 작성
+.video__comment-form {
+  textarea {
+    display: inline-block;
+    width: 100%;
+    height: $height;
+    resize: none;
+    color: #fff;
+    margin: 0 auto;
+    background-color: rgba($color: $bg, $alpha: 0.7);
+    border: none;
+    border-bottom: 1px solid rgba($color: #fff, $alpha: 0.4);
+    padding: 0;
+  }
+  textarea:focus {
+    outline: none;
+  }
+
+  button {
+    float: right;
+    background-color: $bg !important;
+    border: solid 1px #3b3b3b !important;
+    color: #fff !important;
+    box-shadow: 1px 1px 5px black;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+  .comment_save {
+    background-color: #3b3b3b !important;
+    color: #fff !important;
   }
 }
 
+// 댓글
 .video__comments {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  // max-width: 320px;
-  width: 100%;
-  // margin: 0 auto;
-  margin-top: 50px;
+  ul {
+    margin-top: 10px;
+  }
   .comment_avatar {
     width: 40px;
     height: 40px;
@@ -126,22 +132,20 @@ body {
     flex-direction: row;
     padding: 4px;
     .comment__userIcon {
-      width: 3%;
-      padding: 5px;
+      width: 5%;
     }
     .comment_write {
-      width: 92%;
-      padding: 15px;
+      width: 95%;
     }
   }
   .video__comment {
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 4px;
     color: white;
+    margin-bottom: 8px;
     .comment__userIcon {
-      width: 1%;
+      width: 5%;
       div,
       .comment_avatar {
         padding: 5px;
@@ -149,7 +153,7 @@ body {
     }
     .comment__else {
       margin: 0 auto;
-      width: 92%;
+      width: 95%;
       div:not(.comment__menu_box) {
         padding: 5px;
       }
@@ -163,7 +167,6 @@ body {
         color: $grey;
       }
       .comment__menu {
-        // font-size: 13px;
         float: right;
         position: relative;
         line-height: 33px;
@@ -171,8 +174,7 @@ body {
         border-radius: 50%;
         width: 33px;
         height: 33px;
-        margin-top: -7px;
-        margin-right: -7px;
+        margin-right: -10px;
       }
       .comment__menu_box {
         display: none;
@@ -193,18 +195,21 @@ body {
         }
         .comment__btn_text {
           color: white;
-          // font-size: 13px;
         }
       }
       .comment__icons {
         color: $grey;
         margin: 0 auto;
-        margin-top: 3px;
+        padding: 0 !important;
         span {
           line-height: 33px;
         }
+        .comment_reply {
+          margin-left: 20px;
+          cursor: pointer;
+        }
         .likes {
-          margin-left: -10px;
+          margin-left: -2px;
         }
         .comment__heart {
           float: right;

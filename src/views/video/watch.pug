@@ -34,6 +34,11 @@ block content
                 span=video.meta.likes
             if String(video.owner._id) === String(loggedInUser._id) 
                 span.fas.fa-ellipsis-v.video__menu
+        br
+        if String(video.owner._id) === String(loggedInUser._id) 
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr;
         span.video_info
             sapn.video_owner_info
                 span.video__owner_avatar
@@ -47,11 +52,10 @@ block content
                         a(href=`/users/${video.owner._id}`)=video.owner.name
                         span.owner_sub 구독자 1명
             span=video.description
-        br
-        if String(video.owner._id) === String(loggedInUser._id) 
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr;
+        div.comment_count
+            span
+                | 댓글 #{video.comments.length}개
+            span.fas.fa-sort-amount-down.comment_sort &nbsp;정렬 기준
     div.video__comments 
         if loggedIn
             div.video__add-comments
@@ -63,8 +67,8 @@ block content
                             else
                                 img.comment_avatar(src="/" + loggedInUser.avatarUrl)
                     div.comment_write
-                        textarea(cols="30", rows="10" placeholder="Write a nice comment...")
-                        button.comment_save 전송
+                        textarea(cols="30", rows="10" placeholder="공개 댓글 추가...")
+                        button.comment_save 댓글
                         button.comment_calcel 취소
         ul
             each comment in video.comments.reverse()
@@ -101,6 +105,7 @@ block content
                                 - else 
                                     span.far.fa-star
                                 span=comment.meta.likes
+                                span.comment_reply 답글
                             - if (comment.meta.heart)
                                 span.fas.fa-heart.comment__heart.heart
                             - else if (String(video.owner._id) === String(loggedInUser._id))

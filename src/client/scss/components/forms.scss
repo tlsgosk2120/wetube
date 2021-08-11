@@ -4,7 +4,7 @@ form:not(.video__comment-form) {
   &:not(.search__form) {
     padding: 30px;
     background-color: rgba($color: $bg, $alpha: 0.7);
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid rgba($color: #fff, $alpha: 0.1);
   }
 }
@@ -13,7 +13,7 @@ input:not(input[type="range"]),
 input[type="submit"] {
   all: unset;
   padding: 15px 20px;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: black;
   margin-bottom: 5px;
@@ -28,7 +28,7 @@ input[type="submit"] {
 input[type="submit"],
 .social__btn,
 button {
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 12px 20px;
   background-color: white;
   color: rgba($color: $red, $alpha: 1);
