@@ -1,6 +1,8 @@
 body {
   font-size: 14px;
 }
+
+// 비디오
 .video__data {
   margin-top: 20px;
   display: flex;
@@ -11,10 +13,21 @@ body {
   }
   .video_meta {
     width: 100%;
+    height: 33px;
     padding: 20px 0;
     font-size: 14px;
-  }
-  .video__createdAt {
+    line-height: 33px;
+    color: $grey;
+    div:not(.menu_box) {
+      display: inline-block;
+      .likes {
+        margin-right: 20px;
+      }
+    }
+    .video_icons {
+      float: right;
+      font-size: 15px;
+    }
   }
   .video_info {
     width: 100%;
@@ -96,7 +109,6 @@ body {
   textarea:focus {
     outline: none;
   }
-
   button {
     float: right;
     background-color: $bg !important;
@@ -117,7 +129,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  ul {
+  > ul {
     margin-top: 10px;
   }
   .comment_avatar {
@@ -154,7 +166,7 @@ body {
     .comment__else {
       margin: 0 auto;
       width: 95%;
-      div:not(.comment__menu_box) {
+      div:not(.menu_box) {
         padding: 5px;
       }
       .comment__text {
@@ -165,40 +177,6 @@ body {
         text-align: right;
         font-size: 12px;
         color: $grey;
-      }
-      .comment__menu {
-        float: right;
-        position: relative;
-        line-height: 33px;
-        text-align: center;
-        border-radius: 50%;
-        width: 33px;
-        height: 33px;
-        margin-right: -10px;
-      }
-      .comment__menu_box {
-        display: none;
-        border-radius: 5px;
-        box-shadow: 1px 1px 5px black;
-        background-color: #212121;
-        padding: 7px 0;
-        z-index: 1;
-        ul {
-          margin: 0;
-        }
-        li {
-          padding: 5px 18px;
-          cursor: pointer;
-        }
-        li:hover {
-          background-color: #3b3b3b;
-        }
-        span {
-          margin: 5px;
-        }
-        .comment__btn_text {
-          color: white;
-        }
       }
       .comment__icons {
         color: $grey;
@@ -211,71 +189,117 @@ body {
           margin-left: 20px;
           cursor: pointer;
         }
-        .likes {
-          margin-left: -2px;
-        }
         .comment__heart {
           float: right;
           margin-right: -6px;
         }
-        .far,
-        .fas {
-          position: relative;
-          text-align: center;
-          border-radius: 50%;
-          width: 33px;
-          height: 33px;
-        }
-      }
-      .far,
-      .fas {
-        box-sizing: border-box;
-        display: inline-block;
-        color: $grey;
-        &.fa-star,
-        &.fa-heart,
-        &.fa-ellipsis-v {
-          border: 1px solid $bg;
-        }
-      }
-      .far,
-      .fas:not(.heart) {
-        cursor: pointer;
       }
       .comment__menu {
         color: $bg;
-      }
-      .far:hover,
-      .fas:hover:not(.comment__edit_btn):not(.comment__delete_btn):not(.heart) {
-        color: white !important;
-      }
-      .click-after {
-        animation: blink 0.5s ease-in-out;
-      }
-      .comment__edit_btn {
-        // font-size: 13px;
-      }
-      .comment__delete_btn {
-        // font-size: 15px;
-      }
-      .video_owner_heart {
-        cursor: pointer;
-      }
-      .video_owner_heart:hover {
-        color: white !important;
       }
     }
   }
   .video__comment:hover span.comment__menu {
     color: $grey !important;
   }
-
-  .star {
-    color: #fce100 !important;
-  }
   .heart {
     color: #cc4646 !important;
   }
+}
+// 공용
+.video__data,
+.video__comment {
+  .display_none {
+    display: none;
+  }
+  .menu_box {
+    display: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px black;
+    background-color: #212121;
+    padding: 7px 0;
+    z-index: 1;
+    font-size: 14px;
+    line-height: normal;
+    ul {
+      margin: 0;
+    }
+    li {
+      height: 24px;
+      padding: 5px 18px;
+      cursor: pointer;
+    }
+    li:hover {
+      background-color: #3b3b3b;
+    }
+    span {
+      margin: 5px;
+    }
+    .menu_box_text {
+      color: white;
+    }
+  }
+  .comment__menu,
+  .video__menu {
+    float: right;
+    position: relative;
+    line-height: 33px;
+    text-align: center;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    margin-right: -10px;
+  }
+  .likes {
+    margin-left: -2px;
+    .fa-star {
+      line-height: 33px;
+    }
+  }
+  .fa-star,
+  .fa-heart,
+  .fa-ellipsis-v,
+  .fa-ellipsis-h,
+  .fa-user-circle {
+    position: relative;
+    text-align: center;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+  }
+  .far,
+  .fas:not(.fa-search) {
+    box-sizing: border-box;
+    display: inline-block;
+    color: $grey;
+    &.fa-star,
+    &.fa-heart,
+    &.fa-ellipsis-v,
+    &.fa-ellipsis-h {
+      border: 1px solid $bg;
+    }
+  }
+  .far:not(.video__star),
+  .fas:not(.heart):not(.video__star):not(.fa-arrow-down) {
+    cursor: pointer;
+  }
+  .far:hover:not(.video__star),
+  .fas:hover:not(.fa-pen):not(.fa-trash):not(.heart):not(.video__star):not(.fa-arrow-down):not(.fa-search) {
+    color: white !important;
+  }
+  .click-after {
+    animation: blink 0.5s ease-in-out;
+  }
+  .star {
+    color: #fce100 !important;
+  }
+  .icon_pointer {
+    cursor: pointer;
+  }
+  .icon_pointer:hover {
+    color: white !important;
+  }
+
   @keyframes blink {
     0% {
       border: 1px solid #2e2e2e;

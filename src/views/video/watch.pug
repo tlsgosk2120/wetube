@@ -23,22 +23,31 @@ block content
     div.video__data
         p.video__title=video.title
         span.video_meta
-            span.far.fa-eye
-                |  #{video.meta.views} view
-            span.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-            span.likes
-                - if (loggedIn && loggedInUser.videoLikes.includes(video._id.toString())) 
-                    span.fas.fa-star.star &nbsp;
-                - else 
-                    span.far.fa-star &nbsp;
-                span=video.meta.likes
-            if String(video.owner._id) === String(loggedInUser._id) 
-                span.fas.fa-ellipsis-v.video__menu
-        br
-        if String(video.owner._id) === String(loggedInUser._id) 
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr;
+            div
+                span 조회수 #{video.meta.views} 회 • 
+                span.video__createdAt #{new Date(video.createdAt).toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")}. 
+            div.video_icons
+                span.likes
+                    if (loggedIn) 
+                        if loggedInUser.videoLikes.includes(video._id.toString())
+                            span.fas.fa-star.star.video__star.icon_pointer
+                        else 
+                            span.far.fa-star.video__star.icon_pointer
+                    else 
+                        span.far.fa-star.video__star
+                    span=video.meta.likes
+                if String(video.owner._id) === String(loggedInUser._id) 
+                    span.fas.fa-ellipsis-h.video__menu
+            div.menu_box
+                ul 
+                    li.video__edit
+                        a(href=`${video.id}/edit`)
+                            span.fas.fa-pen
+                            span.menu_box_text 수정
+                    li.video__delete
+                        a(href=`${video.id}/delete`)
+                            span.fas.fa-trash
+                            span.menu_box_text 삭제
         span.video_info
             sapn.video_owner_info
                 span.video__owner_avatar
@@ -55,7 +64,8 @@ block content
         div.comment_count
             span
                 | 댓글 #{video.comments.length}개
-            span.fas.fa-sort-amount-down.comment_sort &nbsp;정렬 기준
+            span.fas.fa-sort-amount-down.comment_sort &nbsp;최신순
+
     div.video__comments 
         if loggedIn
             div.video__add-comments
@@ -83,32 +93,37 @@ block content
                         div
                             span=comment.owner.name
                             span.comment__createdAt
-                                |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} &nbsp;
+                                |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-KR", {weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")} &nbsp;
                             if String(comment.owner._id) === String(loggedInUser._id) 
                                 span.fas.fa-ellipsis-v.comment__menu
                         if String(comment.owner._id) === String(loggedInUser._id) 
-                            div.comment__menu_box
+                            div.menu_box
                                 ul 
-                                    li.comment_edit
-                                        span.fas.fa-pen.comment__edit_btn
-                                        span.comment__btn_text 수정
+                                    li.comment__edit
+                                        span.fas.fa-pen
+                                        span.menu_box_text 수정
                                     li.comment__delete
-                                        span.fas.fa-trash.comment__delete_btn
-                                        span.comment__btn_text 삭제
+                                        span.fas.fa-trash
+                                        span.menu_box_text 삭제
+                            form.video__comment-form.display_none
+                                div.comment_write
+                                    textarea(cols="30", rows="10" placeholder="공개 댓글 추가...")
+                                    button.comment_save 저장
+                                    button.comment_calcel 취소
                         div
                             pre.comment__text
                                 | #{`${comment.text}`}
                         div.comment__icons
                             span.likes
                                 - if (loggedIn && loggedInUser.commentLikes.includes(comment._id.toString())) 
-                                    span.fas.fa-star.star
+                                    span.fas.fa-star.star.comment__star
                                 - else 
-                                    span.far.fa-star
+                                    span.far.fa-star.comment__star
                                 span=comment.meta.likes
                                 span.comment_reply 답글
                             if (comment.meta.heart)
                                 if (String(video.owner._id) === String(loggedInUser._id))
-                                    span.fas.fa-heart.comment__heart.heart.video_owner_heart
+                                    span.fas.fa-heart.comment__heart.heart.icon_pointer
                                 else
                                     span.fas.fa-heart.comment__heart.heart
                             else if (String(video.owner._id) === String(loggedInUser._id))

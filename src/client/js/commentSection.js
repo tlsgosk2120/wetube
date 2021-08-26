@@ -1,14 +1,18 @@
+import { async } from "regenerator-runtime";
+
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const deleteBtns = document.querySelectorAll(".comment__delete");
 const videoComments = document.querySelector(".video__comments ul");
-const likesBtns = document.querySelectorAll(".fa-star");
+const commentLikeBtns = document.querySelectorAll(".comment__star");
+const videoLikeBtn = document.querySelector(".video__star");
+const videoMenuBtn = document.querySelector(".video__menu");
 const commentMenuBtns = document.querySelectorAll(".comment__menu");
 const lovesBtns = document.querySelectorAll(".comment__heart");
 const userName = document.querySelector(".user__name");
 const calcelBtn = document.querySelector(".comment_calcel");
 const saveBtn = document.querySelector(".comment_save");
 
+const EDIT_BOX = "comment__edit";
 const DELETE_BOX = "comment__delete";
 let lastMeneBtn;
 
@@ -51,29 +55,32 @@ const addComment = (text, id) => {
   commentElse.className = "comment__else";
   createdAtSpan.className = "comment__createdAt";
   commentMenuIcon.className = "fas fa-ellipsis-v comment__menu";
-  commentMenuBox.className = "comment__menu_box";
+  commentMenuBox.className = "menu_box";
   commentEdit.className = "comment_edit";
-  editIcon.className = "fas fa-pen comment__edit_btn";
-  editText.className = "comment__btn_text";
+  editIcon.className = "fas fa-pen";
+  editText.className = "menu_box_text";
   commentDelete.className = "comment__delete";
-  deleteIcon.className = "fas fa-trash comment__delete_btn";
-  deleteText.className = "comment__btn_text";
+  deleteIcon.className = "fas fa-trash";
+  deleteText.className = "menu_box_text";
   textBox.className = "comment__text";
   commentIcons.className = "comment__icons";
   likes.className = "likes";
-  likesIcon.className = "far fa-star";
+  likesIcon.className = "far fa-star comment__star";
   loveIcon.className = "far fa-heart comment__heart";
   textBox.innerText = `${text}`;
   nameSpan.innerText = `${name}`;
   createdAtSpan.innerText =
     "   ·  " +
-    new Date().toLocaleDateString("ko-kr", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  likesCount.innerText = `  0`;
+    new Date()
+      .toLocaleDateString("ko-KR", {
+        weekday: "long",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replaceAll("-", ". ") +
+    ". ";
+  likesCount.innerText = `0`;
   editText.innerText = `수정`;
   deleteText.innerText = `삭제`;
   elseDiv.appendChild(nameSpan);
@@ -144,6 +151,71 @@ const handleSubmit = async (event) => {
   }
 };
 
+const changeEditComment = (event) => {
+  const { target } = event;
+  let commentMenuBox;
+  if (target.className === EDIT_BOX) {
+    commentMenuBox = target.parentNode.parentNode;
+  } else {
+    commentMenuBox = target.parentNode.parentNode.parentNode;
+  }
+  const commentText = commentMenuBox.nextSibling.nextSibling.firstChild;
+  const commentWrite = commentMenuBox.nextSibling.firstChild;
+  const editArea = commentWrite.firstChild;
+  const commentTextDiv = commentWrite.parentNode.nextSibling;
+  const commentIcons = commentTextDiv.nextSibling;
+
+  editArea.value = commentText.innerText;
+  commentWrite.parentNode.classList.remove("display_none");
+  commentTextDiv.classList.add("display_none");
+  commentIcons.classList.add("display_none");
+  commentWrite.lastChild.previousSibling.addEventListener(
+    "click",
+    handleEditComment
+  );
+  commentWrite.lastChild.addEventListener("click", (event) => {
+    event.preventDefault();
+    commentWrite.parentNode.classList.add("display_none");
+    commentTextDiv.classList.remove("display_none");
+    commentIcons.classList.remove("display_none");
+  });
+};
+
+const editComment = (target) => {
+  const commentMenuBox = target.parentNode.parentNode.previousSibling;
+  const commentWrite = commentMenuBox.nextSibling.firstChild;
+  const editArea = commentWrite.firstChild;
+  const commentTextDiv = commentWrite.parentNode.nextSibling;
+  const commentIcons = commentTextDiv.nextSibling;
+  const commentText = commentMenuBox.nextSibling.nextSibling.firstChild;
+
+  commentText.innerText = editArea.value;
+  commentWrite.parentNode.classList.add("display_none");
+  commentTextDiv.classList.remove("display_none");
+  commentIcons.classList.remove("display_none");
+};
+
+const handleEditComment = async (event) => {
+  event.preventDefault();
+  const { target } = event;
+  const text = target.previousSibling.value;
+  if (text === "") {
+    return;
+  }
+  const commentId =
+    target.parentNode.parentNode.parentNode.parentNode.dataset.id;
+  const response = await fetch(`/api/comments/${commentId}/edit`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text }),
+  });
+  if (response.status === 201) {
+    editComment(target);
+  }
+};
+
 const handleDeleteComment = async (event) => {
   const { target } = event;
   let commentId;
@@ -161,25 +233,33 @@ const handleDeleteComment = async (event) => {
   }
 };
 
+const paintColor = (target) => {
+  target.classList.remove("far");
+  target.classList.add("fas");
+};
+const emptyColor = (target) => {
+  target.classList.remove("fas");
+  target.classList.add("far");
+  target.style.color = "#909090";
+};
+
 const changeIconColor = (target) => {
   if (target.classList.contains("fa-star")) {
     if (target.classList.contains("far")) {
+      paintColor(target);
       target.style.color = "#fce100";
-      target.className = "fas fa-star";
       target.nextSibling.innerText = Number(target.nextSibling.innerText) + 1;
     } else {
-      target.style.color = "#909090";
-      target.className = "far fa-star";
+      emptyColor(target);
       target.nextSibling.innerText = Number(target.nextSibling.innerText) - 1;
     }
   }
   if (target.classList.contains("comment__heart")) {
     if (target.classList.contains("far")) {
-      target.className = "fas fa-heart comment__heart";
+      paintColor(target);
       target.style.color = "#cc4646";
     } else {
-      target.className = "far fa-heart comment__heart";
-      target.style.color = "#909090";
+      emptyColor(target);
     }
   }
 };
@@ -194,7 +274,22 @@ const clickIcon = (target) => {
   }, 300);
 };
 
-const countLike = async (target) => {
+const countVideoLike = async (target) => {
+  if (userName) {
+    let videoId =
+      target.parentNode.parentNode.parentNode.parentNode.previousSibling.dataset
+        .id;
+    const response = await fetch(`/api/videos/${videoId}/like`, {
+      method: "PUT",
+    });
+    if (response.status === 201) {
+      changeIconColor(target);
+      clickIcon(target);
+    }
+  }
+};
+
+const countCommentLike = async (target) => {
   if (userName) {
     let commentId =
       target.parentNode.parentNode.parentNode.parentNode.dataset.id;
@@ -236,6 +331,10 @@ const handleCommentMenuBtn = (event) => {
     window.addEventListener("click", handleRemoveCommentMenu);
   }, 300);
   lastMeneBtn = menu;
+  const editBtn = menu.querySelector(".comment__edit");
+  const deleteBtn = menu.querySelector(".comment__delete");
+  editBtn.addEventListener("click", changeEditComment);
+  deleteBtn.addEventListener("click", handleDeleteComment);
 };
 
 const handleRemoveCommentMenu = () => {
@@ -244,9 +343,14 @@ const handleRemoveCommentMenu = () => {
   }
 };
 
-const handleLikes = (event) => {
+const handleVideoLikes = (event) => {
   const { target } = event;
-  countLike(target);
+  countVideoLike(target);
+};
+
+const handleCommentLikes = (event) => {
+  const { target } = event;
+  countCommentLike(target);
 };
 
 const handleLoves = (event) => {
@@ -274,14 +378,14 @@ if (form) {
   saveBtn.addEventListener("click", handleSubmit);
 }
 
-if (deleteBtns) {
-  deleteBtns.forEach((btn) =>
-    btn.addEventListener("click", handleDeleteComment)
-  );
-}
-
-likesBtns.forEach((btn) => btn.addEventListener("click", handleLikes));
+videoLikeBtn.addEventListener("click", handleVideoLikes);
+commentLikeBtns.forEach((btn) =>
+  btn.addEventListener("click", handleCommentLikes)
+);
 lovesBtns.forEach((btn) => btn.addEventListener("click", handleLoves));
+if (videoMenuBtn) {
+  videoMenuBtn.addEventListener("click", handleCommentMenus);
+}
 commentMenuBtns.forEach((btn) =>
   btn.addEventListener("click", handleCommentMenus)
 );

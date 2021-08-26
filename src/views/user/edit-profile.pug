@@ -3,6 +3,14 @@ extends ../base
 block content
     if errorMessage
         span=errorMessage
+    div.profile__data
+        if !loggedInUser.avatarUrl
+            span.fas.fa-user-circle.avatar
+        else 
+            img(src="/" + loggedInUser.avatarUrl).avatar
+        span.profile_preview.hide_preview
+            span.fas.fa-arrow-down
+            img.preview_image.avatar
     form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="avatar") Avatar 
         input(name="avatar", id="avatar", type="file", accept="image/*")
@@ -14,3 +22,6 @@ block content
         if !loggedInUser.socialOnly
             div.edit-profile__password
                 a(href="change-password") Change Password &rarr; 
+
+block scripts
+    script(src="/static/js/editProfile.js")

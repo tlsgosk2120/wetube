@@ -6,6 +6,20 @@ form {
   }
 }
 
+.profile_preview {
+  span {
+    display: block;
+    margin: 50px 10px;
+    font-size: 30px;
+    text-align: center;
+    color: white;
+  }
+}
+
+.hide_preview {
+  display: none !important;
+}
+
 .edit-profile__password {
   margin-top: 50px;
   text-align: center;
