@@ -243,6 +243,7 @@ export const editComment = async (req, res) => {
   }
   await Comment.findByIdAndUpdate(id, {
     text,
+    edit: true,
   });
   return res.sendStatus(201);
 };

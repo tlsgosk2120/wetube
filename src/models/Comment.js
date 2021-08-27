@@ -9,6 +9,7 @@ const commentSchema = new mongoose.Schema({
     likes: { type: Number, default: 0 },
     heart: { type: Boolean, default: false },
   },
+  edit: { type: Boolean, default: false },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

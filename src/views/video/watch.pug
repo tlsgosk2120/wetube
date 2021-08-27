@@ -78,7 +78,7 @@ block content
                                 img.comment_avatar(src=loggedInUser.avatarUrl)
                     div.comment_write
                         textarea(cols="30", rows="10" placeholder="공개 댓글 추가...")
-                        button.comment_save 댓글
+                        button(disabled).comment_save 댓글
                         button.comment_calcel 취소
         ul
             each comment in video.comments.reverse()
@@ -92,8 +92,10 @@ block content
                     div.comment__else
                         div
                             span=comment.owner.name
-                            span.comment__createdAt
-                                |   ·  #{new Date(comment.createdAt).toLocaleDateString("ko-KR", {weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")} &nbsp;
+                            span.comment__createdAt(data-date=comment.createdAt)
+                                |#{new Date(comment.createdAt).toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")} &nbsp;
+                                if comment.edit 
+                                    span (수정됨)
                             if String(comment.owner._id) === String(loggedInUser._id) 
                                 span.fas.fa-ellipsis-v.comment__menu
                         if String(comment.owner._id) === String(loggedInUser._id) 
@@ -108,7 +110,7 @@ block content
                             form.video__comment-form.display_none
                                 div.comment_write
                                     textarea(cols="30", rows="10" placeholder="공개 댓글 추가...")
-                                    button.comment_save 저장
+                                    button(disabled).comment_save 저장
                                     button.comment_calcel 취소
                         div
                             pre.comment__text

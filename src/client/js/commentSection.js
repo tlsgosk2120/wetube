@@ -11,6 +11,8 @@ const lovesBtns = document.querySelectorAll(".comment__heart");
 const userName = document.querySelector(".user__name");
 const calcelBtn = document.querySelector(".comment_calcel");
 const saveBtn = document.querySelector(".comment_save");
+const commentCreatedAts = document.querySelectorAll(".comment__createdAt");
+const commentWriteBtn = document.querySelector(".video__add-comments textarea");
 
 const EDIT_BOX = "comment__edit";
 const DELETE_BOX = "comment__delete";
@@ -35,6 +37,13 @@ const addComment = (text, id) => {
   const commentDelete = document.createElement("li");
   const deleteIcon = document.createElement("span");
   const deleteText = document.createElement("span");
+
+  const videoCommentForm = document.createElement("form");
+  const commentWrite = document.createElement("div");
+  const commentTextarea = document.createElement("textarea");
+  const commentSaveBtn = document.createElement("button");
+  const commentCancelBtn = document.createElement("button");
+
   const comment = document.createElement("div");
   const textBox = document.createElement("pre");
   const commentIcons = document.createElement("div");
@@ -56,12 +65,24 @@ const addComment = (text, id) => {
   createdAtSpan.className = "comment__createdAt";
   commentMenuIcon.className = "fas fa-ellipsis-v comment__menu";
   commentMenuBox.className = "menu_box";
-  commentEdit.className = "comment_edit";
+  commentEdit.className = "comment__edit";
   editIcon.className = "fas fa-pen";
   editText.className = "menu_box_text";
   commentDelete.className = "comment__delete";
   deleteIcon.className = "fas fa-trash";
   deleteText.className = "menu_box_text";
+
+  videoCommentForm.className = "video__comment-form display_none";
+  commentWrite.className = "comment_write";
+  commentTextarea.cols = 30;
+  commentTextarea.rows = 10;
+  commentTextarea.placeholder = "공개 댓글 추가...";
+  commentSaveBtn.className = "comment_save";
+  commentSaveBtn.disabled = true;
+  commentSaveBtn.innerText = "저장";
+  commentCancelBtn.className = "comment_calcel";
+  commentCancelBtn.innerText = "취소";
+
   textBox.className = "comment__text";
   commentIcons.className = "comment__icons";
   likes.className = "likes";
@@ -93,14 +114,21 @@ const addComment = (text, id) => {
   ul.appendChild(commentEdit);
   ul.appendChild(commentDelete);
   commentMenuBox.appendChild(ul);
+
+  commentWrite.appendChild(commentTextarea);
+  commentWrite.appendChild(commentSaveBtn);
+  commentWrite.appendChild(commentCancelBtn);
+  videoCommentForm.appendChild(commentWrite);
+
+  comment.appendChild(textBox);
   likes.appendChild(likesIcon);
   likes.appendChild(likesCount);
   commentIcons.appendChild(likes);
   if (String(name) === String(videoOwner.innerText))
     commentIcons.appendChild(loveIcon);
-  comment.appendChild(textBox);
   commentElse.appendChild(elseDiv);
   commentElse.appendChild(commentMenuBox);
+  commentElse.appendChild(videoCommentForm);
   commentElse.appendChild(comment);
   commentElse.appendChild(commentIcons);
   userIcon.appendChild(a);
@@ -114,7 +142,6 @@ const addComment = (text, id) => {
   newComment.appendChild(commentElse);
   videoComments.prepend(newComment);
 
-  commentDelete.addEventListener("click", handleDeleteComment);
   commentMenuIcon.addEventListener("click", handleCommentMenus);
 };
 
@@ -179,6 +206,7 @@ const changeEditComment = (event) => {
     commentTextDiv.classList.remove("display_none");
     commentIcons.classList.remove("display_none");
   });
+  commentWrite.firstChild.addEventListener("keyup", handleButtonDisable);
 };
 
 const editComment = (target) => {
@@ -188,6 +216,12 @@ const editComment = (target) => {
   const commentTextDiv = commentWrite.parentNode.nextSibling;
   const commentIcons = commentTextDiv.nextSibling;
   const commentText = commentMenuBox.nextSibling.nextSibling.firstChild;
+
+  const editTextAdd = document.createElement("span");
+  editTextAdd.innerText = "(수정됨)";
+  commentMenuBox.previousSibling.firstChild.nextSibling.appendChild(
+    editTextAdd
+  );
 
   commentText.innerText = editArea.value;
   commentWrite.parentNode.classList.add("display_none");
@@ -337,6 +371,42 @@ const handleCommentMenuBtn = (event) => {
   deleteBtn.addEventListener("click", handleDeleteComment);
 };
 
+const modifyTime = (at) => {
+  // · 2021 - 08 - 27(수정됨)
+  const commentTime = at.innerText.replaceAll(". ", "-");
+  let edit = "";
+  if (commentTime.length > 12) {
+    edit = commentTime.substr(12, 5);
+  }
+  let time;
+  const createDate = new Date(at.dataset.date);
+  const now = new Date();
+  const SEC = 1000;
+  const MIN = SEC * 60;
+  const HOUR = MIN * 60;
+  const DAY = HOUR * 24;
+  const WEEK = DAY * 7;
+  const MON = DAY * 30;
+  const YEAR = DAY * 365;
+
+  const cur = now - createDate;
+  const seconds = `${parseInt(cur / SEC)}초 전`;
+  const minutes = Number(cur / MIN) >= 1 ? `${parseInt(cur / MIN)}분 전` : 0;
+  const hours = Number(cur / HOUR) >= 1 ? `${parseInt(cur / HOUR)}시간 전` : 0;
+  const days = Number(cur / DAY) >= 1 ? `${parseInt(cur / DAY)}일 전` : 0;
+  const weeks = Number(cur / WEEK) >= 1 ? `${parseInt(cur / WEEK)}주 전` : 0;
+  const months = Number(cur / MON) >= 1 ? `${parseInt(cur / MON)}개월 전` : 0;
+  const years = Number(cur / YEAR) >= 1 ? `${parseInt(cur / YEAR)}년 전` : 0;
+  if (seconds != 0) time = seconds;
+  if (minutes != 0) time = minutes;
+  if (hours != 0) time = hours;
+  if (days != 0) time = days;
+  if (weeks != 0) time = weeks;
+  if (months != 0) time = months;
+  if (years != 0) time = years;
+  at.innerText = `${time}${edit}`;
+};
+
 const handleRemoveCommentMenu = () => {
   if (lastMeneBtn) {
     lastMeneBtn.style.display = "none";
@@ -374,6 +444,18 @@ const handleCancelBtn = (event) => {
   comment.value = "";
 };
 
+const handleButtonDisable = (event) => {
+  const { target } = event;
+  let CLASS_NAME = `.${target.parentNode.parentNode.parentNode.classList.toString()} textarea`;
+  let empty;
+  empty = document.querySelector(CLASS_NAME).value.length == 0 ? true : false;
+  if (empty) {
+    target.nextSibling.disabled = true;
+  } else {
+    target.nextSibling.disabled = false;
+  }
+};
+
 if (form) {
   saveBtn.addEventListener("click", handleSubmit);
 }
@@ -390,3 +472,7 @@ commentMenuBtns.forEach((btn) =>
   btn.addEventListener("click", handleCommentMenus)
 );
 calcelBtn.addEventListener("click", handleCancelBtn);
+if (commentCreatedAts) {
+  commentCreatedAts.forEach((at) => modifyTime(at));
+}
+commentWriteBtn.addEventListener("keyup", handleButtonDisable);
