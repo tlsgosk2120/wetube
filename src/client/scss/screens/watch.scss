@@ -9,12 +9,12 @@ body {
   flex-direction: column;
   .video__title {
     font-size: 18px;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
   }
   .video_meta {
     width: 100%;
     height: 33px;
-    padding: 20px 0;
+    padding: 10px 0 15px 0;
     font-size: 14px;
     line-height: 33px;
     color: $grey;
@@ -54,7 +54,7 @@ body {
       .video__owner {
         height: 100%;
         width: 95%;
-        margin-bottom: 5px;
+        // margin-bottom: 5px;
         padding: 5px 0;
         .owner_name {
           display: inline-block;
@@ -268,7 +268,7 @@ body {
     height: 33px;
   }
   .far,
-  .fas:not(.fa-search) {
+  .fas:not(.fa-search):not(.fa-user-circle) {
     box-sizing: border-box;
     display: inline-block;
     color: $grey;

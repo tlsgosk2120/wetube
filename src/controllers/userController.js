@@ -120,6 +120,8 @@ export const finishGithubLogin = async (req, res) => {
     }
     let user = await User.findOne({ email: emailObj.email });
     if (!user) {
+      console.log(userData.avatar_url);
+      console.log(userData.avatar_url.replace("/", ""));
       user = await User.create({
         avatarUrl: userData.avatar_url,
         name: userData.name,
@@ -169,7 +171,7 @@ export const postEdit = async (req, res) => {
   const updateUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.path : avatarUrl,
+      avatarUrl: file ? "/" + file.path : avatarUrl,
       name,
       email,
       username,

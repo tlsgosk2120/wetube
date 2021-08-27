@@ -7,7 +7,7 @@ block content
         if !loggedInUser.avatarUrl
             span.fas.fa-user-circle.avatar
         else 
-            img(src="/" + loggedInUser.avatarUrl).avatar
+            img(src=loggedInUser.avatarUrl).avatar
         span.profile_preview.hide_preview
             span.fas.fa-arrow-down
             img.preview_image.avatar

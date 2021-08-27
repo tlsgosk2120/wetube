@@ -55,7 +55,7 @@ block content
                         if !video.owner.avatarUrl
                             span.fas.fa-user-circle.owner_avatar
                         else
-                            img.owner_avatar(src="/" + video.owner.avatarUrl)
+                            img.owner_avatar(src=video.owner.avatarUrl)
                 span.video__owner
                     span.owner_name
                         a(href=`/users/${video.owner._id}`)=video.owner.name
@@ -75,7 +75,7 @@ block content
                             if !loggedInUser.avatarUrl
                                 span.fas.fa-user-circle.comment_avatar
                             else
-                                img.comment_avatar(src="/" + loggedInUser.avatarUrl)
+                                img.comment_avatar(src=loggedInUser.avatarUrl)
                     div.comment_write
                         textarea(cols="30", rows="10" placeholder="공개 댓글 추가...")
                         button.comment_save 댓글
@@ -88,7 +88,7 @@ block content
                             if !comment.owner.avatarUrl
                                 span.fas.fa-user-circle.comment_avatar
                             else
-                                img.comment_avatar(src="/" + comment.owner.avatarUrl)
+                                img.comment_avatar(src=comment.owner.avatarUrl)
                     div.comment__else
                         div
                             span=comment.owner.name
