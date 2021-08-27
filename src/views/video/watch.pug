@@ -59,7 +59,7 @@ block content
                 span.video__owner
                     span.owner_name
                         a(href=`/users/${video.owner._id}`)=video.owner.name
-                        span.owner_sub 구독자 1명
+                        span.owner_sub=video.hashtags
             span=video.description
         div.comment_count
             span
