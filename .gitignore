@@ -2,6 +2,7 @@
 /uploads
 .DS_Store
 /assets
+/build
 
 # Logs
 logs
