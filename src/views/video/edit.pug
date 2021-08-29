@@ -1,9 +1,19 @@
 extends ../base
 
 block content
-    h4 Update video
-    form(method="POST")
-        input(name="title", placeholder="Video Title", value=video.title, required)
-        input(placeholder="Description", required, type="text", name="description", minlength=20, value=video.description)
-        input(type="text", name="hashtags", placeholder="Hashtags, separated by comma.", required, value=video.hashtags.join())
-        input(value="Save", type="submit")
+    div.edit__video
+        div.title Update video
+        div.video_thumb Thumbnail
+            div.thumb(style=`background-image:url(/${video.thumbUrl}); background-size:cover; background-position:center;`)
+        form(method="POST", enctype="multipart/form-data")
+            span.notice * 비디오와 썸네일은 바꾸지 않으려면 선택하지 않아도 됩니다.
+            br
+            br
+            label(for="video") Video File
+            input(type="file", accept="video/*", id="video", name="video")
+            label(for="thumb") Thumbnail File
+            input(type="file", accept="image/*", id="thumb", name="thumb")
+            input(type="text" name="title", placeholder="Video Title", value=video.title, required)
+            input(type="text", placeholder="Description", required, name="description", minlength=20, value=video.description)
+            input(type="text", name="hashtags", placeholder="Hashtags, separated by comma.", required, value=video.hashtags.join().replaceAll(",", ", "))
+            input(value="Save", type="submit")

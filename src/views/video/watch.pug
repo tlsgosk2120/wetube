@@ -25,7 +25,7 @@ block content
         span.video_meta
             div
                 span 조회수 #{video.meta.views} 회 • 
-                span.video__createdAt #{new Date(video.createdAt).toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")}. 
+                span.video__createdAt #{new Date(video.createdAt).toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")}
             div.video_icons
                 span.likes
                     if (loggedIn) 
@@ -40,12 +40,12 @@ block content
                     span.fas.fa-ellipsis-h.video__menu
             div.menu_box
                 ul 
-                    li.video__edit
-                        a(href=`${video.id}/edit`)
+                    a(href=`${video.id}/edit`)
+                        li.video__edit
                             span.fas.fa-pen
                             span.menu_box_text 수정
-                    li.video__delete
-                        a(href=`${video.id}/delete`)
+                    a(href=`${video.id}/delete`)
+                        li.video__delete
                             span.fas.fa-trash
                             span.menu_box_text 삭제
         span.video_info
@@ -59,7 +59,7 @@ block content
                 span.video__owner
                     span.owner_name
                         a(href=`/users/${video.owner._id}`)=video.owner.name
-                        span.owner_sub=video.hashtags
+                        span.owner_sub=video.hashtags.join().replaceAll(",", ", ")
             span=video.description
         div.comment_count
             span
@@ -93,8 +93,7 @@ block content
                         div
                             span=comment.owner.name
                             span.comment__createdAt(data-date=comment.createdAt)
-                                |#{new Date(comment.createdAt).toLocaleDateString("ko-KR", {year: 'numeric', month: '2-digit', day: '2-digit'}).replaceAll("-", ". ")} &nbsp;
-                                if comment.edit 
+                                if comment.edit
                                     span (수정됨)
                             if String(comment.owner._id) === String(loggedInUser._id) 
                                 span.fas.fa-ellipsis-v.comment__menu

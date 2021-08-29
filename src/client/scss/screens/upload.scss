@@ -11,6 +11,26 @@
         }
     }
 }
+.edit__video {
+    text-align: center;
+    .title {
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .video_thumb {
+        font-size: 14px;
+        margin: 30px auto;
+        .thumb {
+            width: 350px;
+            height: 200px;
+            margin: 10px auto;
+        }
+    }
+    .notice {
+        color: red;
+        float: left;
+    }
+}
 
 button {
     width: auto;
