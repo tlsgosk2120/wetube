@@ -69,8 +69,8 @@ export const postEdit = async (req, res) => {
     await Video.findByIdAndUpdate(id, {
         title,
         description,
-        fileUrl: video ? video[0].path : uploadVideo.fileUrl,
-        thumbUrl: thumb ? thumb[0].destination + "/" + thumb[0].filename : uploadVideo.thumbUrl,
+        fileUrl: video ? video[0].location : uploadVideo.fileUrl,
+        thumbUrl: thumb ? thumb[0].location : uploadVideo.thumbUrl,
         hashtags: Video.formatHashtags(hashtags.replaceAll(", ", ",")),
     });
     req.flash("success", "Changes saved.");
@@ -93,8 +93,8 @@ export const postUpload = async (req, res) => {
         const newVideo = await Video.create({
             title,
             description,
-            fileUrl: video[0].path,
-            thumbUrl: thumb[0].destination + "/" + thumb[0].filename,
+            fileUrl: video[0].location,
+            thumbUrl: thumb[0].location,
             owner: _id,
             hashtags: Video.formatHashtags(hashtags),
         });
