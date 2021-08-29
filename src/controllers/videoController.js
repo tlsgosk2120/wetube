@@ -2,6 +2,7 @@ import Video from "../models/Video";
 import Comment from "../models/Comment";
 import User from "../models/User";
 import { async } from "regenerator-runtime";
+import { isHeroku } from "../middlewares";
 
 // Video.find({}, (error, videos) => {});
 // const decodedUrl = decodeURI(window.location.search); 한글 params 얻고 싶을 때
@@ -69,8 +70,8 @@ export const postEdit = async (req, res) => {
     await Video.findByIdAndUpdate(id, {
         title,
         description,
-        fileUrl: video ? video[0].location : uploadVideo.fileUrl,
-        thumbUrl: thumb ? thumb[0].location : uploadVideo.thumbUrl,
+        fileUrl: video ? (isHeroku ? video[0].location : "/" + video[0].path) : uploadVideo.fileUrl,
+        thumbUrl: thumb ? (isHeroku ? thumb[0].location : thumb[0].path) : uploadVideo.thumbUrl,
         hashtags: Video.formatHashtags(hashtags.replaceAll(", ", ",")),
     });
     req.flash("success", "Changes saved.");
@@ -93,8 +94,8 @@ export const postUpload = async (req, res) => {
         const newVideo = await Video.create({
             title,
             description,
-            fileUrl: video[0].location,
-            thumbUrl: thumb[0].location,
+            fileUrl: isHeroku ? video[0].location : "/" + video[0].path,
+            thumbUrl: isHeroku ? thumb[0].location : thumb[0].path,
             owner: _id,
             hashtags: Video.formatHashtags(hashtags),
         });

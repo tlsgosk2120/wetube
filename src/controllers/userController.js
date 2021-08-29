@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcryptjs from "bcryptjs";
+import { isHeroku } from "../middlewares";
 
 export const getJoin = (req, res) => res.render("user/join", { pageTitle: "Join" });
 
@@ -165,7 +166,7 @@ export const postEdit = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
         _id,
         {
-            avatarUrl: file ? file.location : avatarUrl,
+            avatarUrl: file ? (isHeroku ? file.location : "/" + file.path) : avatarUrl,
             name,
             email,
             username,
