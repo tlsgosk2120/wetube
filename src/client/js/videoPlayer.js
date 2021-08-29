@@ -47,7 +47,6 @@ const handleVolumeChange = (event) => {
         video.muted = false;
         muteBtnIcon.classList = "fas fa-volume-up";
     }
-    console.log(value);
     volumeValue = value;
     video.volume = value;
     if (value == 0) {
@@ -133,9 +132,6 @@ const handleSpacebarDownAgain = () => {
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
-if (video.readyState === 4) {
-    video.addEventListener("loadeddata", handleLoadedMetadata);
-}
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
@@ -148,3 +144,4 @@ if (commentForm) {
     commentForm.addEventListener("click", handleStopSpacebarDown);
     commentForm.addEventListener("focusout", handleSpacebarDownAgain);
 }
+setTimeout(video.addEventListener("loadeddata", handleLoadedMetadata), 30000);
