@@ -39,6 +39,5 @@ export const modifyTime = (at) => {
 };
 
 if (createAt) {
-    console.log(createAt);
     modifyTime(createAt);
 }
