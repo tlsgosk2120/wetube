@@ -1,7 +1,7 @@
 import "regenerator-runtime";
 import "../scss/styles.scss";
 
-const createAt = document.querySelector(".video-mixin__createAt");
+const createAt = document.querySelectorAll(".video-mixin__createAt");
 
 export const modifyTime = (at) => {
     const commentTime = at.firstChild;
@@ -39,5 +39,5 @@ export const modifyTime = (at) => {
 };
 
 if (createAt) {
-    modifyTime(createAt);
+    createAt.forEach((at) => modifyTime(at));
 }
